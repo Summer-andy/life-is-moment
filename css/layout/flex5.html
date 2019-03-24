@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+
+  .flex-container {
+    background: red;
+    display: flex;
+    /* align-content: stretch; align-content是指每一行的对齐与align-items是有差别的,align-item的作用是弹性元素的每一项。 */
+    /* align-content: flex-start; 各行向弹性容器的起始处对齐 */
+    /* align-content: flex-end; 各行向弹性容器的结束处对齐 */
+    /* align-content: space-between; 各行在弹性容器中均匀分布 */
+    /* align-content: space-around; 弹性元素的第一项和最后一项距离弹性盒子的边距为各个弹性元素间隔的一半 */
+    /* align-content: center; 各行向弹性盒子中心处对齐  */
+  }
+
+  .flex-container-item {
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+    margin: 10px;
+  }
+
+  </style>
+
+  <div class="flex-container">
+    <div class="flex-container-item">1</div>
+    <div class="flex-container-item">2</div>
+    <div class="flex-container-item">3</div>
+  </div>
+
+</body>
+</html>

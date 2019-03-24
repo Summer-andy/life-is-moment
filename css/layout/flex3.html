@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  .flex-container {
+    background: red;
+    display: flex;
+    /* align-items: flex-start; 表示弹性项中的第一个与弹性盒子的侧轴的起始边界对齐 */
+    /* align-items: flex-end; 与侧轴的结束边界对齐 */
+    /* align-items: center; 与侧轴的中心处对齐 */
+    /* align-items:stretch; 该属性较为特殊, 假如弹性项没有设定宽高,那么通过设置这个属性可以自适应弹性盒子 */
+    height: 400px;
+  }
+
+  .flex-container-item {
+    width: 100px;
+    /* height: 100px; */
+    background-color: aqua;
+    margin: 10px;
+  }
+
+
+</style>
+<body>
+    <div class="flex-container">
+        <div class="flex-container-item">1</div>
+        <div class="flex-container-item">2</div>
+        <div class="flex-container-item">3</div>
+        <div class="flex-container-item">4</div>
+        <div class="flex-container-item">5</div>
+        <div class="flex-container-item">6</div>
+        <div class="flex-container-item">7</div>
+        <div class="flex-container-item">8</div>
+      </div>
+</body>
+</html>
