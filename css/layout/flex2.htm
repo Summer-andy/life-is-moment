@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+
+  .flex-container {
+    background: red;
+    display: flex;
+    justify-content:flex-start; /* 弹性项目向行头并齐, 第一个弹性元素的的外边距线被放置在改行的mian-start边线, 也就是说第一个弹性项的距离容器的margin值为0 */
+    /* justify-content: flex-end; 弹性项目向行尾并齐 */
+    /* justify-content: center 弹性项目居中对齐 */
+    /* justify-content: space-between 当弹性项只有一个时,他的效果跟flex-start是一样的。否则的话第一个弹性项与main-start对齐,最后一个弹性项与main-end对齐。中间部分弹性排列,并且距离间隔一样 */
+    /* justify-content: space-around 当只有一项时,他的效果跟center一样,否则,弹性项之间弹性排列,也就是说每一个弹性项的间隔一样。比如说都是（20px）,那么第一项和最后一项距离首尾都是是20/2 =10px. */
+  }
+
+  .flex-container-item {
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+  }
+
+  </style>
+
+  <div class="flex-container">
+    <div class="flex-container-item">1</div>
+    <div class="flex-container-item">2</div>
+    <div class="flex-container-item">3</div>
+  </div>
+
+</body>
+</html>
