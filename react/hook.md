@@ -1,4 +1,4 @@
-(```)
+`
 import React, { Fragment, useState, useEffect } from 'react';
 const Hooks = ({}) => {
   const [count, setcount] = useState(0);
@@ -40,4 +40,4 @@ const Hooks = ({}) => {
 
 export default Hooks;
 
-(```)
+`
