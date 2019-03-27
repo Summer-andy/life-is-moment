@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+a[class^=icons] {
+  background: red
+}
+/* 匹配所有a标签下的类名中以icons开头的元素 */
+
+a[href$=pdf] {
+  background: greenyellow
+}
+
+/* 与^=的作用相反,匹配a标签下href属性内的以pdf结尾的元素 */
+
+a[title*=andy] {
+  background: fuchsia
+}
+
+/* 匹配title中包含andy字符串的元素,不必在乎开头结尾,只是包含 */
+
+</style>
+<body>
+  <a href="1.pdf">这是pdf文件</a>
+  <a href="" class="iconsss" >我的class是icon</a>
+  <a href="" title="我的title是andy">我的title是andy</a>
+</body>
+</html>
