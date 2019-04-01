@@ -8,3 +8,7 @@ record my study
 - 基础语法篇
   + es6基本语法
   + typescript语法
+    + [在react中的使用例子](https://github.com/sixiaodong123/TypeScript-React-Starter)
+    + [在node中的使用例子](https://github.com/sixiaodong123/TypeScript-Node-Starter)
+- 打包模块篇
+  + [浅尝webpack](https://github.com/sixiaodong123/webpack)
