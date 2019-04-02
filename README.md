@@ -12,3 +12,5 @@ record my study
     + [在node中的使用例子](https://github.com/sixiaodong123/TypeScript-Node-Starter)
 - 打包模块篇
   + [浅尝webpack](https://github.com/sixiaodong123/webpack)
+- react速记篇
+  + [非嵌套组件之间的通信](./react/listen/listen.md)
