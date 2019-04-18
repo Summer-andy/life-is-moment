@@ -11,6 +11,7 @@ record my study
   + typescript语法
     + [在react中的使用例子](https://github.com/sixiaodong123/TypeScript-React-Starter)
     + [在node中的使用例子](https://github.com/sixiaodong123/TypeScript-Node-Starter)
+    + [typescript基础语法]
 - 打包模块篇
   + [浅尝webpack](https://github.com/sixiaodong123/webpack)
 - react速记篇
