@@ -36,37 +36,38 @@
   - 安装 ssl(nginx 的 ssl 功能需要 openssl 库)
 
   ```
-  $ cd /usr/local/
-  $ wget http://www.openssl.org/source/openssl-1.0.1j.tar.gz
-  $ tar -zxvf openssl-1.0.1j.tar.gz
-  $ ./config
-  $ make
+      $ cd /usr/local/
+      $ wget http://www.openssl.org/source/openssl-1.0.1j.tar.gz
+      $ tar -zxvf openssl-1.0.1j.tar.gz
+      $ ./config
+      $ make
 
   ```
 
   - 好啦,我们 nginx 安装的前置工作都完事了,接下来我们开始 nginx 的安装
 
   ```
-   $ cd /usr/local/
-   $ wget http://nginx.org/download/nginx-1.8.0.tar.gz
-   $ tar -zxvf nginx-1.8.0.tar.gz
-   $ cd nginx-1.8.0
-   $ ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=/usr/local/pcre-8.35 --with-openssl=/usr/local/openssl-1.0.1j --with-zlib=/usr/local/zlib-1.2.11
-   $ make
-   $ make install
-   #查看版本
-   $ /usr/local/webserver/nginx/sbin/nginx -v
+      $ cd /usr/local/
+      $ wget http://nginx.org/download/nginx-1.8.0.tar.gz
+      $ tar -zxvf nginx-1.8.0.tar.gz
+      $ cd nginx-1.8.0
+      $ ./configure --prefix=/usr/local/webserver/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=/usr/local/pcre-8.35 --with-openssl=/usr/local/openssl-1.0.1j --with-zlib=/usr/local/zlib-1.2.11
+      $ make
+      $ make install
+      #查看版本
+      $ /usr/local/webserver/nginx/sbin/nginx -v
 
   ```
 
   - 启动 nginx `$ /usr/local/webserver/nginx/sbin/nginx`
 
   - 打开浏览器,输入公网 ip 如果浏览器窗口出现 welcome to ngxin!那么说明你 nginx 已经启动成功了(nginx 的默认端口为 80)
-  - 接下来我们需要把我们的前端项目上传到服务器中(要记住项目的目录哦！), 我推荐使用 ftp 软件上传(亲测好用！)
+  - 接下来我们需要把我们的前端项目以及 ssl 证书以及密钥上传到服务器中(要记住项目的目录哦！), 我推荐使用 ftp 软件上传(亲测好用！)
   - 最后我们只需要修改 nginx 里面的配置文件就好
     -. 我们进入 nginx 配置文件的目录 `$ cd /usr/local/webserver/nginx/conf`
     -. 编辑我们 conf 文件 `$ vim nginx.conf`
     -. 修改默认配置为下面所示（记得去阿里云服务器设置安全组）:
+
     ```
       {
         listen       443;  // http默认端口为443
@@ -89,4 +90,5 @@
             index  index.html index.htm;
         }
     ```
+
     -. 重启 nginx 服务器 `/usr/local/webserver/nginx/sbin/nginx –s reopen`
