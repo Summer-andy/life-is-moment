@@ -25,3 +25,4 @@ record my study
   + [事件冒泡](./other/maopao/maopao.md)
   + [Ionic4使用心得][等待ing]
   + [从零开始部署前端项目(https)](./other/service/service.md)
+  + [封装可拖拽插件][等待ing]
