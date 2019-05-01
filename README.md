@@ -17,7 +17,7 @@ record my study
 - react速记篇
   + [非嵌套组件之间的通信](./react/listen/listen.md)
   + [瀑布流](https://www.wopaige.cn/)
-  + [react hooksApi阅读]
+  + [react hooksApi阅读](./react/hook/hook.md)
 - 番外篇
   + [H-Vision前端架构][等待ing]
   + [electron](./electron/electron.md)
