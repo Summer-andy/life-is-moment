@@ -112,3 +112,35 @@ function Counter({initialState}) {
 }
 ```
 从上面的例子可以看到, useReducer内置了一个dispatch和state。从名字中我们就可以看出来他的作用了, state 就是redux里面的状态机, dispatch取代了我们action里面的派发动作了。当出现一个新技术的时候,我们始终应该关注着能为我们带来什么便利,我认为useReducer最大的好处就是可以简化代码, 没有必要写冗余的代码。
+
+### useRef的介绍
+useRef 返回一个可变的ref对象。返回的对象将持续整个生命周期。useRef将替代我们之前用的ref, 它的current的值发生改变,React相应的DOM的属性值将发生改变。
+```
+const Hooks = () => {
+  const testRef = useRef();
+  const Refclick = () => {
+    console.log(testRef.current);
+  }
+  return (
+    <div>
+      <input ref={testRef}/>
+      <button onClick={Refclick}>测试Ref</button>
+    </div>
+  );
+};
+```
+输出的值为我们input的DOM。 当然useRef不仅仅可用于操作DOM, 还可以获取之前dom的状态。
+
+```
+function Counter() {
+  const [count, setCount] = useState(0);
+  const prevCountRef = useRef();
+  useEffect(() => {
+    prevCountRef.current = count;
+  });
+  const prevCount = prevCountRef.current;
+  return <h1>Now: {count}, before: {prevCount}</h1>;
+}
+```
+未来React可能会提供usePrevious开箱即用的Hook，因为它是一个相对常见的用例.
+
