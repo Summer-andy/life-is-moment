@@ -28,4 +28,4 @@ record my study
   + [封装可拖拽插件][等待ing]
   + [使用commitizen和changelog规范多人协作开发](./other/git/commit.md)
   + [npm(classnames库的使用)](./other/classnames/classnames.md)
-  + [andorid编译时模拟器与apk之间格式支持问题](./other/android/android.md)
+  + [andorid编译时模拟器与apk之间格式支持问题](./other/andorid/android.md)
