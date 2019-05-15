@@ -83,37 +83,6 @@ useEffect(() => {
 
 在这里只有 count 变化,才会执行这个函数,这样就可以实现定制化了。
 
-### useReducer 的介绍
-
-在使用 useReducer 之前我们一般的 redux 数据处理方式是这样的: 一般我们新建一个 redux 的容器为
-
-- 一个大的 redux
-  - 小的 redux
-    - action (用来派发的 action, 这里我们不把 service 抽离出来单独处理)
-    - type (用来区分派发不用的 action)
-    - index (用来转发的 reducer)
-    - selector (可省略, 主要的作用是转化数据结构表并且优化性能)
-  - ....
-  - ....
-  - ....
-
-当我们的页面发起请求的时候,就会自动去调用 redux 里面的 action.当我们使用了 useReducer 的时候, 我们可以不用去在 redux 中定义 action 直接在页面中进行 dispatch 就好了。下面我们还是引用官方计时器的例子
-
-```
-function Counter({initialState}) {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  return (
-    <>
-      Count: {state.count}
-      <button onClick={() => dispatch({type: 'increment'})}>+</button>
-      <button onClick={() => dispatch({type: 'decrement'})}>-</button>
-    </>
-  );
-}
-```
-
-从上面的例子可以看到, useReducer 内置了一个 dispatch 和 state。从名字中我们就可以看出来他的作用了, state 就是 redux 里面的状态机, dispatch 取代了我们 action 里面的派发动作了。当出现一个新技术的时候,我们始终应该关注着能为我们带来什么便利,我认为 useReducer 最大的好处就是可以简化代码, 没有必要写冗余的代码。
-
 ### useRef 的介绍
 
 useRef 返回一个可变的 ref 对象。返回的对象将持续整个生命周期。useRef 将替代我们之前用的 ref, 它的 current 的值发生改变,React 相应的 DOM 的属性值将发生改变。
