@@ -89,7 +89,7 @@ useEffect(() => {
 
 - 一个大的 redux
   - 小的 redux
-    - action (用来派发的 action, 这里我们不把service抽离出来单独处理)
+    - action (用来派发的 action, 这里我们不把 service 抽离出来单独处理)
     - type (用来区分派发不用的 action)
     - index (用来转发的 reducer)
     - selector (可省略, 主要的作用是转化数据结构表并且优化性能)
@@ -111,10 +111,13 @@ function Counter({initialState}) {
   );
 }
 ```
-从上面的例子可以看到, useReducer内置了一个dispatch和state。从名字中我们就可以看出来他的作用了, state 就是redux里面的状态机, dispatch取代了我们action里面的派发动作了。当出现一个新技术的时候,我们始终应该关注着能为我们带来什么便利,我认为useReducer最大的好处就是可以简化代码, 没有必要写冗余的代码。
 
-### useRef的介绍
-useRef 返回一个可变的ref对象。返回的对象将持续整个生命周期。useRef将替代我们之前用的ref, 它的current的值发生改变,React相应的DOM的属性值将发生改变。
+从上面的例子可以看到, useReducer 内置了一个 dispatch 和 state。从名字中我们就可以看出来他的作用了, state 就是 redux 里面的状态机, dispatch 取代了我们 action 里面的派发动作了。当出现一个新技术的时候,我们始终应该关注着能为我们带来什么便利,我认为 useReducer 最大的好处就是可以简化代码, 没有必要写冗余的代码。
+
+### useRef 的介绍
+
+useRef 返回一个可变的 ref 对象。返回的对象将持续整个生命周期。useRef 将替代我们之前用的 ref, 它的 current 的值发生改变,React 相应的 DOM 的属性值将发生改变。
+
 ```
 const Hooks = () => {
   const testRef = useRef();
@@ -129,7 +132,8 @@ const Hooks = () => {
   );
 };
 ```
-输出的值为我们input的DOM。 当然useRef不仅仅可用于操作DOM, 还可以获取之前dom的状态。
+
+输出的值为我们 input 的 DOM。 当然 useRef 不仅仅可用于操作 DOM, 还可以获取之前 dom 的状态。
 
 ```
 function Counter() {
@@ -142,5 +146,132 @@ function Counter() {
   return <h1>Now: {count}, before: {prevCount}</h1>;
 }
 ```
-未来React可能会提供usePrevious开箱即用的Hook，因为它是一个相对常见的用例.
 
+未来 React 可能会提供 usePrevious 开箱即用的 Hook，因为它是一个相对常见的用例.
+
+### useReducer 的介绍
+
+useReducer 接收二个类型参数:1. 当前状态的 state 2. 返回与状态相关的 dispatch。假如你已经熟悉 redux 模式, 那么这个例子肯定很容易理解。这里特别说明一下, useReducer 假如需要从其他组件中传递参数那么可以通过在组件入口处定义个初始对象,切记一定要使用对象包一下！之后 useReducer 中第二个参数用于传递参数到 reducer 中。
+
+```
+
+function initialState(params) {
+  console.log(params);
+  return { count: 0 }
+}
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'add':
+      return {
+        count: state.count + 1
+      }
+    case 'reduce':
+      return {
+        count: state.count - 1
+      }
+    default:
+      break;
+  }
+}
+
+const UseReducer = ({ arr = [{ id: 1, number : 2 }]}) => {
+  const [state, dispatch] = useReducer(reducer, arr ,initialState);
+  console.log(state, dispatch);
+  return (
+    <div>
+      <p>{state.count}</p>
+      <Button
+        onClick={() => {
+          dispatch({ type: 'add' });
+        }}
+      >
+        增加
+      </Button>
+      <Button
+        onClick={() => {
+          dispatch({ type: 'reduce' });
+        }}
+      >
+        减少
+      </Button>
+    </div>
+  );
+};
+
+export default UseReducer;
+
+
+```
+
+### useCallback 的使用教程
+
+不知道大家是否会注意到,当我们使用 hooks 写法的时候, 每次 state 更新都会引起整个内部的函数的重新申明, 何以见得呢? 当我们 state 更新的时候, 我们可以在 hooks 内部打印一下,会发现只要 state 变化, 就会打印一下。这个现象,说明了有闭包调用问题, 因此为了节约内存,我们可以使用 useCallBack 来缓存一下,只有在特定情况下才重新申明。下面我们直接看例子.
+
+```
+const useCallBack = () => {
+
+  const [state, setState] = useState(0);
+
+  const hello = useCallback(() => {
+    console.log('hello!');
+  }, [state]);
+
+  console.log('object');
+
+  return (
+    <div>
+      <p onClick={hello}>{state}</p>
+      <button onClick={() => { setState(state + 1) }}>gogoog</button>
+    </div>
+  );
+};
+```
+
+### useImperativeHandle 的使用
+
+场景： 父组件需要使用子组件的 ref 进行一些操作。这时候就需要用到 useImperativeHandle 了
+使用方法: （子组件需要使用forwardRef包一下哦）
+
+```
+import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+
+const useImperativeHandles = (props, ref) => {
+  const inputRef = useRef();
+
+  useImperativeHandle(ref, () => ({
+    focusHH: () => {
+      inputRef.current.focus();
+    }
+  }));
+
+  return (
+    <div>
+      <input ref={inputRef} />
+    </div>
+  );
+};
+
+export default forwardRef(useImperativeHandles);
+```
+``` 
+import React, { useRef, useEffect } from 'react';
+import UseImperativeHandles from './index';
+const Parnent = () => {
+
+  const fancyInputRef = useRef();
+
+  useEffect(() => {
+    console.log(fancyInputRef);
+    fancyInputRef.current.focusHH();
+  }, []);
+
+  return (
+    <div>
+      <UseImperativeHandles ref={fancyInputRef} />
+    </div>
+  );
+};
+
+export default Parnent;
+```
