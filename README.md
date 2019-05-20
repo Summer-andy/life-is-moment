@@ -26,4 +26,5 @@ record my study
   + [x] [使用commitizen和changelog规范多人协作开发](./other/git/commit.md)
   + [x] [npm(classnames库的使用)](./other/classnames/classnames.md)
   + [x] [andorid编译时模拟器与apk之间格式支持问题](./other/andorid/android.md)
-  + [ ] 在react中与md的完美结合
+  + [x] [在react中与md的完美结合](https://github.com/sixiaodong123/react-markdown)
+  + [ ] [xcode在ios APP编译时出现A valid provisioning profile for this executable was not found](./other/ios/ios.md)
