@@ -20,7 +20,7 @@ record my study
 - 番外篇
   + [x] [electron](./electron/electron.md)
   + [x] [事件冒泡](./other/maopao/maopao.md)
-  + [ ] [Ionic4使用心得][等待ing]
+  + [x] [Ionic4踩坑历险记](./other/ionic/Lonic.md)
   + [x] [从零开始部署前端项目(https)](./other/service/service.md)
   + [ ] [封装可拖拽插件][等待ing]
   + [x] [使用commitizen和changelog规范多人协作开发](./other/git/commit.md)
