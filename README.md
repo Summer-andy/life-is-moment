@@ -30,4 +30,6 @@ record my study
   + [x] [在react中与md的完美结合](https://github.com/sixiaodong123/react-markdown)
   + [x] [xcode在ios APP编译时出现A valid provisioning profile for this executable was not found](./other/ios/ios.md)
   + [ ] [让你的网页更加的丝滑][等待ing] 
-  + [x] [js获取本机ip](./other/getIp/getIp.md) 
+  + [x] [js获取本机ip](./other/getIp/getIp.md)
+  + [ ] [learn到底解决了什么？]
+  + [ ] [使用verdaccio搭建一套属于自己的私服]
