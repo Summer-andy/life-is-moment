@@ -32,4 +32,4 @@ record my study
   + [ ] [让你的网页更加的丝滑][等待ing] 
   + [x] [js获取本机ip](./other/getIp/getIp.md)
   + [ ] [learn到底解决了什么？]
-  + [ ] [使用verdaccio搭建一套属于自己的私服]
+  + [x] [使用verdaccio搭建一套属于自己的私服](https://ppt.baomitu.com/d/cfb98208)
