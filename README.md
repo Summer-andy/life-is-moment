@@ -33,3 +33,4 @@ record my study
   + [x] [js获取本机ip](./other/getIp/getIp.md)
   + [ ] [learn到底解决了什么？]
   + [x] [使用verdaccio搭建一套属于自己的私服](https://ppt.baomitu.com/d/cfb98208)
+  + [x] [你不知道的javascript(上)] ( 1.什么是作用域)
