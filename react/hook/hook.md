@@ -83,6 +83,72 @@ useEffect(() => {
 
 在这里只有 count 变化,才会执行这个函数,这样就可以实现定制化了。
 
+
+### useContent
+首先我大概介绍一下这个钩子的作用是什么?这个钩子主要是用于上下文传递值用的。在介绍这个钩子的用法之前,我想回一下,hooks出现之前,上下文之间的值传递是如何进行的。
+```
+ class Father extends Component {
+
+  static childContextTypes = {
+    permissions: PropTypes.array
+  };
+
+    getChildContext() {
+    return {
+      permissions: [1,2,3,4]
+    };
+  }
+ }
+
+```
+```
+  class Children extends Component {
+
+    const withContent = (props, content) => {
+      return ...
+    }
+
+    withContent.contextTypes = {
+      permissions: PropTypes.array
+    }
+
+  }
+```
+我们可以看到还有有点复杂的。首先在父组件需要定义个childContextTypes。然后通过getChildContext派发到children.那么children处怎么接收呢？在chidlren得使用contextTypes接收一下permissions。那么我们如果使用hooks的话,比这个方便而且好理解多啦。我们通过createContext这个函数创建一个上下文,然后通过Provider提供给下文,下文通过useContext接收上文提供的值。
+
+```
+import React, { createContext } from 'react';
+import Example from './Example';
+export const themeContent = createContext(null);
+
+const index = () => {
+  return (
+    <themeContent.Provider value="light">
+      <Example />
+    </themeContent.Provider>
+  );
+};
+
+export default index;
+```
+
+```
+import React, { useContext } from 'react';
+import { themeContent } from './index';
+const Example = () => {
+  const theme = useContext(themeContent);
+  return (
+    <div>
+      {
+        theme
+      }
+    </div>
+  );
+};
+
+export default Example;
+```
+
 ### useRef 的介绍
 
 useRef 返回一个可变的 ref 对象。返回的对象将持续整个生命周期。useRef 将替代我们之前用的 ref, 它的 current 的值发生改变,React 相应的 DOM 的属性值将发生改变。
