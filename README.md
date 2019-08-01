@@ -34,3 +34,5 @@ record my study
   + [ ] [learn到底解决了什么？]
   + [x] [使用verdaccio搭建一套属于自己的私服](https://ppt.baomitu.com/d/cfb98208)
   + [x] [你不知道的javascript(上)](./jsGrammer/你不知道的js上/index.md)
+  + [x] [滚动条处理方案])()
+  + [x] [看板框架方法]() 
