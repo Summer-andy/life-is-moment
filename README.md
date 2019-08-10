@@ -13,7 +13,7 @@ record my study
     + [ ] [在node中的使用例子](https://github.com/sixiaodong123/TypeScript-Node-Starter)
     + [ ] [typescript基础语法]
 - 打包模块篇
-  + [x] [浅尝webpack](https://github.com/sixiaodong123/webpack)
+  + [x] [浅尝webpack](./webpack/day1.md)
 - react速记篇
   + [x] [非嵌套组件之间的通信](./react/listen/listen.md)
   + [x] [瀑布流](https://www.wopaige.cn/)
