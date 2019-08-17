@@ -1,9 +1,16 @@
+<!--
+ * @Author: Andy
+ * @Date: 2019-04-16 00:17:33
+ * @LastEditors: Andy
+ * @LastEditTime: 2019-08-17 22:20:36
+ -->
 # Daily-Record
 record my study
 - 基础样式篇
   + [x] [flex(弹性盒子)布局](https://github.com/sixiaodong123/Daily-Record/blob/master/css/layout/flex.md)
   + [x] [css3属性选择](https://github.com/sixiaodong123/Daily-Record/tree/master/css/css3select/css3select.md)
   + [x] [移动端rem适配篇](./css/rem/rem.md)
+  + [ ] [N种方法解决flex布局U最后一行居中问题]()
   + [ ] [css Tricks](./css/tricks/index.md)
 - 基础模式篇
   + [x] [模板方法模式](https://github.com/sixiaodong123/Daily-Record/blob/master/jsModel/template.html)
