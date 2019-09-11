@@ -1,3 +1,9 @@
+<!--
+ * @Author: Andy
+ * @Date: 2019-04-26 16:48:59
+ * @LastEditors: Andy
+ * @LastEditTime: 2019-04-26 16:48:59
+ -->
 ### 你是否已经习惯了git add . -> git commit ... -> git push?。随着我们的项目功能越来越多团队越来越大,那么我们的项目的分支会有爆发性的增加。如果我们还是只使用传统的三步曲,那么我们的项目会变得非常难以追溯。
 
 ### 如何解决该问题呢？ 
@@ -13,7 +19,7 @@
 
 
 #### 接下来我们全局安装一下changelog
-``` npm install -g conventional-chagelog-cli   ```
+``` npm install -g conventional-changelog-cli   ```
 
 #### 生成所有的changelog
 ``` conventional-changelog -p angular -I CHANGELOG.md -s -r 0 ```
