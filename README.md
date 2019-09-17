@@ -19,6 +19,8 @@ record my study
     + [ ] [在react中的使用例子](https://github.com/sixiaodong123/TypeScript-React-Starter)
     + [ ] [在node中的使用例子](https://github.com/sixiaodong123/TypeScript-Node-Starter)
     + [ ] [typescript基础语法]
+  + javascript语法
+    + [x] [多种方式取数组的最后一项,并且比较区别](./jsGrammer/js/array.html)
 - 打包模块篇
   + [x] [浅尝webpack](./webpack/day1.md)
 - react速记篇
