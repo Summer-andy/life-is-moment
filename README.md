@@ -45,3 +45,4 @@ record my study
   + [x] [你不知道的javascript(上)](./jsGrammer/你不知道的js上/index.md)
   + [x] [滚动条处理方案])()
   + [x] [看板框架方法]() 
+  + [x] [npm link]() 
