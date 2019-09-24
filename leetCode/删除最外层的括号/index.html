@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  输入："(()())(())"
+输出："()()()"
+解释：
+输入字符串为 "(()())(())"，原语化分解得到 "(()())" + "(())"，
+删除每个部分中的最外层括号后得到 "()()" + "()" = "()()()"。
+</body>
+<script>
+/**
+ * @param {string} S
+ * @return {string}
+ */
+ var removeOuterParentheses = function(S) {
+  let count = 0;
+  let arr = [];
+   for (let index = 0; index < S.length; index++) {
+     if(S[index] === '(') {
+       count = count + 1;
+     } 
+     if (S[index] === ')') {
+      count = count - 1;
+     }
+     if(count === 0) {
+       console.log(index);
+      //  console.log(S.substring(0, index+1));
+       arr.push(S.substring(0, index+1));
+     }
+   }
+   console.log(arr);
+  };
+
+  removeOuterParentheses('(()())(())(()(()))')
+
+
+</script>
+</html>
