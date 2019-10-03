@@ -11,4 +11,34 @@
 
 给出两个整数 x 和 y，计算它们之间的汉明距离。
 </body>
+<script>
+
+/**
+ * @param {number} x
+ * @param {number} y
+ * @return {number}
+ */
+ var hammingDistance = function(x, y) {
+   let count = 0;
+   let length = Math.abs(x.toString(2).length - y.toString(2).length);
+
+   let data = x.toString(2).length > y.toString(2).length ? y.toString(2) : x.toString(2);
+   let preData =  x.toString(2).length > y.toString(2).length ? x.toString(2) : y.toString(2);
+   for (let index = 0; index < length; index++) {
+     data = 0 + data;
+   }
+   for (let index = 0; index < data.length; index++) {
+     if(data[index] !== preData[index]) {
+       count = count + 1;
+     }
+   }
+  console.log(count);
+   console.log(data);
+   console.log(preData);
+
+   return count;
+  };
+
+  hammingDistance(4, 14);
+</script>
 </html>
