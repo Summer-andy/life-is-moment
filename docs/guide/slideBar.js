@@ -17,7 +17,9 @@ module.exports = [
   },
   {
     title: '样式处理篇',
-    children: []
+    children: [
+			'/guide/css/选择器'
+		]
   },
   {
     title: '设计模式篇',
@@ -39,7 +41,8 @@ module.exports = [
 		children: [
 			'/guide/others/serviceHttps',
 			'/guide/others/commitizen',
-			'/guide/others/verdaccio'
+      '/guide/others/verdaccio',
+      '/guide/others/img'
 		]
   },
   {
