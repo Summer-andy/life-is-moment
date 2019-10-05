@@ -46,6 +46,9 @@ module.exports = [
 		]
   },
   {
-    title: '年度总结篇'
+    title: '年度总结篇',
+    children: [
+      '/guide/review/2018'
+    ]
   }
 ];
