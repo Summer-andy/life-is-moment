@@ -13,7 +13,8 @@ module.exports = [
       '/guide/leetCode/删除最外层括号',
       '/guide/leetCode/IP地址无效化',
       '/guide/leetCode/NIM游戏',
-      '/guide/leetCode/机器人能否返回原点'
+      '/guide/leetCode/机器人能否返回原点',
+      '/guide/leetCode/增减字符串匹配'
     ]
   },
   {
