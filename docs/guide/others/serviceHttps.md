@@ -15,7 +15,8 @@
 
   - 安装编译工具以及库文件 `yum -y install make gcc-c++ libtool`
   - 安装 PCRE(PCRE 的作用是: nginx 的 rewrite 伪静态匹配规则用到正则，PCRE 就是帮我干这个事情的)
-    ```$ cd /usr/local
+    ```
+      $ cd /usr/local
       $ wget http://downloads.sourceforge.net/project/pcre/pcre/8.35/pcre-8.35.tar.gz
       $ tar zxvf pcre-8.35.tar.gz
       $ cd pcre-8.35
