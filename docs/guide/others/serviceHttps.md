@@ -1,5 +1,7 @@
 ### 从零部署前端项目
 
+### ![image](./imgs/timg.jpeg)
+
 - 部署的前置准备
 
   - 阿里云 centos 服务器
