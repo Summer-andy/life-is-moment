@@ -45,7 +45,8 @@ module.exports = [
 			'/guide/others/serviceHttps',
 			'/guide/others/commitizen',
       '/guide/others/verdaccio',
-      '/guide/others/img'
+      '/guide/others/img',
+      '/guide/others/applePublish'
 		]
   },
   {
