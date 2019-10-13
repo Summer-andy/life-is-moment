@@ -15,7 +15,8 @@ module.exports = [
       '/guide/leetCode/NIM游戏',
       '/guide/leetCode/机器人能否返回原点',
       '/guide/leetCode/增减字符串匹配',
-      '/guide/leetCode/高度检查器'
+      '/guide/leetCode/高度检查器',
+      '/guide/leetCode/七进制数'
     ]
   },
   {
