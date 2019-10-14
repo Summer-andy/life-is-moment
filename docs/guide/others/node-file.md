@@ -4,7 +4,7 @@
 
     我们需要将node_modules/@hvisions里面的所有module_开头的都复制到build/media中。
 
-![image](/docs/guide/others/imgs/glob.jpg)
+![image](./imgs/glob.jpg)
 
 #### 实现代码
 
