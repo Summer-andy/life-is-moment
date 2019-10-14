@@ -16,7 +16,9 @@ module.exports = [
       '/guide/leetCode/机器人能否返回原点',
       '/guide/leetCode/增减字符串匹配',
       '/guide/leetCode/高度检查器',
-      '/guide/leetCode/七进制数'
+      '/guide/leetCode/七进制数',
+      '/guide/leetCode/棒球比赛',
+      '/guide/leetCode/重复N次的元素'
     ]
   },
   {
