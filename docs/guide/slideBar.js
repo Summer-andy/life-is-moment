@@ -50,7 +50,8 @@ module.exports = [
       '/guide/others/verdaccio',
       '/guide/others/img',
       '/guide/others/applePublish',
-      '/guide/others/node-file'
+      '/guide/others/node-file',
+      '/guide/others/Antdccf.md'
 		]
   },
   {
