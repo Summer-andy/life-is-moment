@@ -56,7 +56,8 @@ module.exports = [
       '/guide/others/img',
       '/guide/others/applePublish',
       '/guide/others/node-file',
-      '/guide/others/Antdccf.md'
+      '/guide/others/Antdccf',
+      '/guide/others/微交互'
 		]
   },
   {
