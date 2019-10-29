@@ -28,7 +28,8 @@ module.exports = [
   {
     title: '样式处理篇',
     children: [
-			'/guide/css/选择器'
+      '/guide/css/选择器',
+      '/guide/css/cssTick'
 		]
   },
   {
