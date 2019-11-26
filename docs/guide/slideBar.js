@@ -28,10 +28,7 @@ module.exports = [
   },
   {
     title: '样式处理篇',
-    children: [
-      '/guide/css/选择器',
-      '/guide/css/cssTick'
-		]
+    children: ['/guide/css/选择器', '/guide/css/cssTick']
   },
   {
     title: '设计模式篇',
@@ -46,25 +43,23 @@ module.exports = [
   },
   {
     title: 'react速记篇',
-    children: ['/guide/react/hooks']
+    children: ['/guide/react/hooks', '/guide/react/hoc']
   },
   {
-		title: '番外拓展篇',
-		children: [
-			'/guide/others/serviceHttps',
-			'/guide/others/commitizen',
+    title: '番外拓展篇',
+    children: [
+      '/guide/others/serviceHttps',
+      '/guide/others/commitizen',
       '/guide/others/verdaccio',
       '/guide/others/img',
       '/guide/others/applePublish',
       '/guide/others/node-file',
       '/guide/others/Antdccf',
       '/guide/others/微交互'
-		]
+    ]
   },
   {
     title: '年度总结篇',
-    children: [
-      '/guide/review/2018'
-    ]
+    children: ['/guide/review/2018']
   }
 ];
