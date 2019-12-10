@@ -43,7 +43,7 @@ module.exports = [
   },
   {
     title: 'react速记篇',
-    children: ['/guide/react/hooks', '/guide/react/hoc', '/guide/react/createElement.md']
+    children: ['/guide/react/hooks', '/guide/react/hoc', '/guide/react/createElement.md', '/guide/react/suspense.md']
   },
   {
     title: '番外拓展篇',
