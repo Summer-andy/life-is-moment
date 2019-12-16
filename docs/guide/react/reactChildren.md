@@ -38,7 +38,7 @@ export default () => (
 ```
 ![image](./img/children.jpg)
 
-##### 小明同学一听到小美同学☎️说, 界面崩了，顿时慌了。立马打开电脑, 开始仔细地排查问题。聪明的小明同学发现当WrapComponent组件下只有一个元素的时候props.children的类型是一个```obejct```，而不是```array```。这时候小明同学打开的React的官网看了看对children的介绍: this.props.children是一个不透明的数据结构。就是说它的类型可能是一个string或者是obejct又或者是array等等。那怎么解决这种不确定性呢？React提供了一个```Children``` API。小明同学看了官网的介绍后改了改代码，发现不报错了。
+##### 小明同学一听到小美同学☎️说, 界面崩了，顿时慌了。立马打开电脑, 开始仔细地排查问题。聪明的小明同学发现当WrapComponent组件下只有一个元素的时候props.children的类型是一个```obejct```，而不是```array```。这时候小明同学打开的React官网看了看对children的介绍: this.props.children是一个不透明的数据结构。就是说它的类型可能是一个string或者是obejct又或者是array等等。那怎么解决这种不确定性呢？React提供了一个```Children``` API。小明同学看了官网的介绍后改了改代码，发现不报错了。
 
 ```
 import React from 'react'
