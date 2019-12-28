@@ -39,11 +39,19 @@ module.exports = [
     children: []
   },
   {
-    title: '模块打包篇'
+    title: '模块打包篇',
+    children: [
+      '/guide/webpack',
+    ]
   },
   {
     title: 'react速记篇',
-    children: ['/guide/react/hooks', '/guide/react/hoc', '/guide/react/createElement.md', '/guide/react/suspense.md']
+    children: [
+      '/guide/react/hooks',
+      '/guide/react/hoc',
+      '/guide/react/createElement.md',
+      '/guide/react/suspense.md'
+    ]
   },
   {
     title: '番外拓展篇',
@@ -60,6 +68,6 @@ module.exports = [
   },
   {
     title: '年度总结篇',
-    children: ['/guide/review/2018']
+    children: ['/guide/review/2018', '/guide/review/2019']
   }
 ];
