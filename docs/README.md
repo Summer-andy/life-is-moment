@@ -1,9 +1,3 @@
----
-home: true
-heroImage: /home.gif
-# heroText: 开发文档
-actionText: OPEN →
-actionLink: /guide/leetCode/宝石与石头
-features:
-footer: Andy
----
+2020-01-02T04:13:00+08:00
+随机数:63318
+提交次数:1
