@@ -8,18 +8,11 @@
   </head>
   <body></body>
   <script>
-try
-{
-  decodeURI('%2');
-
-}
-catch(error)
-{
-  console.log(error);
-    if (error instanceof RangeError)
-    {
-        // Handle the error
+    function foo(str) {
+      "use strict";
+      eval(str); // 欺骗!
+       console.log( b);
     }
-}
+    foo('var b = 3');
   </script>
 </html>
