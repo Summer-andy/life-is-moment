@@ -1,9 +1,12 @@
-#### 你不知道的js之你不知道的Error
+## 你不知道的js之你不知道的Error
+
+### 前言
+##### 对于开发者来说,可能平时不太会注重Error。如果现在让你回答js中的Error有哪些,你能立马回答出来么？我给我自己的答案是不能。如果你也不能,希望你可以花2~3分钟阅读本文,也算是巩固基础知识啦 🤝.
 
 #### 1.EvalError
 ##### 定义: EvalError is not used in the current ECMAScript specification and will thus not be thrown by the runtime. However, the object itself remains for backwards compatibility with earlier versions of the specification.
 
-##### 解释: 这段话的大致意思就是说:EvalError在当前的ECMAScript中不会被使用,因此在运行中几乎不会抛出这个异常。那么什么时候会抛出这个异常呢？首先, 这个异常是发生在eval函数上的，eval函数的作用主要是计算某个字符串,并且执行其中的javascript的表达式。如果我们试图覆盖 eval 属性或者 eval() 方法赋予另一个属性,并通过该属性调用它，那么就会抛出一个 EvalError 异常。但是在实际开发中,相信这个eval方法用的人也比较少, 也不太建议大家使用eval, with之类会欺骗作用域的函数。因为在我们使用这类函数的时候,它们会在运行时修改或者创建新的作用域,以此来欺骗它们在定义时的作用域, 从而导致我们的代码性能下降。
+##### 解释: EvalError在当前的ECMAScript中不会被使用,因此在运行中几乎不会抛出这个异常。那么什么时候会抛出这个异常呢？首先, 这个异常是发生在eval函数上的，eval函数的作用主要是计算某个字符串,并且执行其中的javascript的表达式。如果我们试图覆盖 eval 属性或者 eval() 方法赋予另一个属性,并通过该属性调用它，那么就会抛出一个 EvalError 异常。但是在实际开发中,相信这个eval方法用的人也比较少, 也不太建议大家使用eval, with之类会欺骗作用域的函数。因为在我们使用这类函数的时候,它们会在运行时修改或者创建新的作用域,以此来欺骗它们在定义时的作用域, 从而导致我们的代码性能下降。
 
 #### 2.InternalError
 ##### 定义: The InternalError object indicates an error that occurred internally in the JavaScript engine. For example: "InternalError: too much recursion"
