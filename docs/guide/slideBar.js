@@ -36,7 +36,10 @@ module.exports = [
   },
   {
     title: '基础语法篇',
-    children: []
+    children: [
+      '/guide/js/Error.md',
+      '/guide/js/This.md'
+    ]
   },
   {
     title: '模块打包篇',
@@ -50,7 +53,8 @@ module.exports = [
       '/guide/react/hooks',
       '/guide/react/hoc',
       '/guide/react/createElement.md',
-      '/guide/react/suspense.md'
+      '/guide/react/suspense.md',
+      '/guide/react/reactChildren.md'
     ]
   },
   {
