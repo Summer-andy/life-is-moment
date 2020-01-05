@@ -44,7 +44,7 @@ module.exports = [
   {
     title: '模块打包篇',
     children: [
-      '/guide/webpack',
+      '/guide/webpack/speed.md',
     ]
   },
   {
