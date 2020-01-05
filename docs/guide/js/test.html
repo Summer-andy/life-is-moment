@@ -8,11 +8,18 @@
   </head>
   <body></body>
   <script>
-    function foo(str) {
-      "use strict";
-      eval(str); // 欺骗!
-       console.log( b);
-    }
-    foo('var b = 3');
+function foo() {
+  console.log(this.a);
+}
+
+var obj = {
+  a: 2,
+  foo: foo
+}
+
+var bar = obj.foo;
+
+bar();
+
   </script>
 </html>
