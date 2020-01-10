@@ -54,7 +54,8 @@ module.exports = [
       '/guide/react/hoc',
       '/guide/react/createElement.md',
       '/guide/react/suspense.md',
-      '/guide/react/reactChildren.md'
+      '/guide/react/reactChildren.md',
+      '/guide/react/useReact.md'
     ]
   },
   {
