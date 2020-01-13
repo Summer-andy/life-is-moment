@@ -98,21 +98,18 @@
 
 
     ##### 防火墙的基本使用
-    启动： systemctl start firewalld
-    关闭： systemctl stop firewalld
-    查看状态： systemctl status firewalld 
-    开机禁用  ： systemctl disable firewalld
-    开机启用  ： systemctl enable firewalld
-    查看版本： firewall-cmd --version
-    查看帮助： firewall-cmd --help
-    显示状态： firewall-cmd --state
-    查看所有打开的端口： firewall-cmd --zone=public --list-ports
-    更新防火墙规则： firewall-cmd --reload
-    添加端口
-    firewall-cmd --zone=public --add-port=80/tcp --permanent    （--permanent永久生效，没有此参数重启后失效）
-    重新载入
-    firewall-cmd --reload
-    查看80端口状态
-    firewall-cmd --zone= public --query-port=80/tcp
-    删除80端口
-    firewall-cmd --zone= public --remove-port=80/tcp --permanent
+    - 启动： systemctl start firewalld
+
+    - 关闭： systemctl stop firewalld
+     - 查看状态： systemctl status firewalld
+     - 开机禁用  ： systemctl disable firewalld
+     - 开机启用  ： systemctl enable firewalld
+     - 查看版本： firewall-cmd --version
+     - 查看帮助： firewall-cmd --help
+     - 显示状态： firewall-cmd --state
+     - 查看所有打开的端口： firewall-cmd --zone=public --list-ports
+     - 更新防火墙规则： firewall-cmd --reload
+     - 添加端口  firewall-cmd --zone=public --add-port=80/tcp --permanent  （--permanent永久生效，没有此参数重启后失效）
+    -  重新载入 firewall-cmd --reload
+    - 查看 80 端口状态 firewall-cmd --zone= public --query-port=80/tcp 删除 80 端口
+    - firewall-cmd --zone= public --remove-port=80/tcp --permanent
