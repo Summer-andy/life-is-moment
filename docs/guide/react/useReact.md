@@ -311,20 +311,36 @@
 
 #### 2. 改变State的5种方式
 
+  -  普通方式
+  ``` 
+   let { count } = this.state; 
+   this.setState({ count: count + 2  })
+  ```
+  -  通过回调函数
+  ``` 
+   this.setState({count} => ({ count: count + 2 }))
+  ```
+  - 通过传递state和props
+  ```
+  this.setState((state, props) => {
+    return { count: state.count + props.step };
+  });
+  ```
+  - hooks方式
+  ```
+  const [count, setCount] = useState(0)
+  setCount(count+2)
+  ``` 
+  - 改变state，执行的回调函数
+  ```
+  this.setState(
+    {count:3},()=>{
+      fn()
+    } 
+  ) 
+  ```
 
-#### 3. 监听state的变化
 
+#### 3.高阶组件
 
-#### 4.Ref相关的知识
-
-
-#### 5.static的使用
-
-
-#### 6.箭头函数的使用
-
-
-#### 7.高阶组件
-
-
-#### 8.classnames的使用
+##### 参考React 组件设计-高阶组件
