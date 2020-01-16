@@ -38,7 +38,9 @@ module.exports = [
     title: '基础语法篇',
     children: [
       '/guide/js/Error.md',
-      '/guide/js/This.md'
+      '/guide/js/This.md',
+      '/guide/js/Type.md',
+      '/guide/js/Prototype.md',
     ]
   },
   {
