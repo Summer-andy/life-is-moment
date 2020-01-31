@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    //   var duck = {
+    //   name: '🦆',
+    //   duckSinging: function () {
+    //     console.log('嘎嘎嘎');
+    //   }
+    // }
+
+    // var chickKen = {
+    //   name: '🐔',
+    //   duckSinging:function () {
+    //     console.log('嘎嘎嘎');
+    //   }
+    // }
+
+    // var choir = [];
+
+    // var joinChoir = function (animal) {
+    //   if(animal && typeof animal.duckSinging === 'function') {
+    //     choir.push(animal);
+    //   }
+    // }
+
+    // joinChoir(duck);
+    // joinChoir(chickKen);
+
+    // var makeSound = function(animal) {
+    //   if (animal instanceof cat) {
+    //     console.log('喵喵喵');
+    //   }
+    //   if (animal instanceof dog) {
+    //     console.log('汪汪汪');
+    //   }
+    // };
+
+    // var cat = function(params) {};
+
+    // var dog = function(params) {};
+
+    // makeSound(new cat());
+    // makeSound(new dog());
+
+    var makeSound = function(animal) {
+      animal.sound();
+    };
+
+    var cat = function(params) {};
+
+    var dog = function(params) {};
+
+    cat.prototype.sound = function(params) {
+      console.log('喵喵喵');
+    };
+
+    dog.prototype.sound = function(params) {
+      console.log('汪汪汪');
+    };
+
+    makeSound(new cat());
+    makeSound(new dog());
+  </script>
+</html>

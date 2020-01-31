@@ -32,7 +32,9 @@ module.exports = [
   },
   {
     title: '设计模式篇',
-    children: []
+    children: [
+      '/guide/mode/duck.md'
+    ]
   },
   {
     title: '基础语法篇',
