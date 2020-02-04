@@ -17,6 +17,7 @@
 * [this的透彻理解](./docs/guide/js/This.md)
 * [js类型的窥探](./docs/guide/js/Type.md)
 * [js原型的窥探](./docs/guide/js/Prototype.md)
+* [揭秘Babel](./docs/guide/js/Babel.md)
 #### 样式学习篇
 * [css常用选择](./docs/guide/css/选择器.md)
 #### React学习篇

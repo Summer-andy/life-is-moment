@@ -43,6 +43,7 @@ module.exports = [
       '/guide/js/This.md',
       '/guide/js/Type.md',
       '/guide/js/Prototype.md',
+      '/guide/js/Babel.md'
     ]
   },
   {
