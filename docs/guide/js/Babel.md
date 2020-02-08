@@ -1,5 +1,5 @@
 #### 这一次我真的搞懂了Babel
-   前言: 之前虽然大致看了看Babel相关的知识,但是并没有深入了解。本文前半部分先详细介绍一下Babel是如何编译ES6+代码并且转化为浏览器能够理解的代码, 后半部分将会实现一个简单的babel插件。
+   前言: 之前虽然大致看了看Babel相关的知识,但是并没有深入了解。本文前半部分先详细介绍一下Babel是如何编译JS代码并且转化为浏览器能够理解的代码, 后半部分将会实现一个简单的babel插件。
 
 #### 什么是Babel？
     Babel is a compiler for writing next generation JavaScript.Babel是编写下一代JavaScript的编译器。
@@ -57,3 +57,40 @@
      - right: y
      下面这张图就是这个function解析后AST树的样子。
       ![image](./Babel.png)
+
+
+    实战操作
+
+    ```
+    const parse = require('@babel/parser');
+    const code = 'function getResult(x, y) {return x + y; }';
+    console.log(parse.parse(code));
+    ```
+    我们引入@babel/parser把我们刚刚的表达式当成输入,我们看看输出是怎么样的, 发现他解析出来的AST树正是我们所解释的样子。
+    至于上面提到的关键词(比如```BlockStatement```、```ReturnStatement```...)我们可以在[MDN](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API#Node_objects)中寻找到。
+     ![image](./AST.png)
+
+
+##### 然后我们开始第二步:```遍历转换 ```
+   - 我们这里使用@babel/traverse来遍历AST,继续上面的代码,我们简单的使用一下traverse,我们可以在控制台看到path输出的其实每一个节点的信息,我们可以在enter里面对某一个节点进行快速的操作。
+  
+      ```
+      traverse.default(ast,{
+        enter(path) {
+          if (
+            path.node.type === "Identifier" &&
+            path.node.name === "x"
+          ) {
+            path.node.name = "n";
+          }
+        }
+      });
+     ```
+
+ ##### 最后一步: ```AST语法树转化为JS代码```
+   - 这里我们使用babel-generator将AST转化为JS, generate的第一个参数就是转化后的ast了, 第二个参数是一些生成js代码时候的一些选项比如要不注释,压缩等等。至此上半节的内容已经结束了。下半节我们将会开始编写插件。
+  
+   ```
+    const oj = generate.default(ast,{ },code)
+    console.log(oj.code);   // function getResult(n, y) {  return n + y; }
+   ```
