@@ -94,3 +94,41 @@
     const oj = generate.default(ast,{ },code)
     console.log(oj.code);   // function getResult(n, y) {  return n + y; }
    ```
+
+   ### 编写Babel插件
+
+   #### 前言: 在我们编写Babel插件之前我们还需要了解几个知识点:
+-  Visitor: 当Babel处理每一个节点的时候,是通过访问者的形式获取节点的从而处理节点的, 而这种方式是通过visitor对象来操作的,在visitor对象中内置了一系列对节点的访问的函数,这样我就可以针对不同的节点进行快速的处理。我们编写的Babel插件其实也就是实例化一个Visitor对象处理一系列的AST节点。我们举一个简单的例子。假如我们想按需加载react-ladingg。那么很简单我只需要把下面这段代码 ```  import BabelLoading  from  'react-ladingg/lib/BabelLoading' ```即可。
+    ```
+    import { BabelLoading } from  'react-ladingg'
+    ```
+
+    那么我们定义的Babel插件的对象就应该是:
+
+    ```
+    visitor: {
+    ImportDeclaration: (path, state) => {
+    }
+    }
+   ```
+   当我们的Babel处理节点的时候 遇到了 import语句的时候那么它就会进入ImportDeclaration方法.我们来看一下它的传参。
+   - path: 它包含了属性和方法: 属性: node: 当前节点, parent: 父节点, scope: 作用域... 方法:replaceWith: 用AST节点替换当前节点， replaceWithMultiple: 用多个AST节点替换当前节点， remove： 删除节点...
+   - state: state是visitor对象中每次访问节点方法时传入的第二个参数。包含诸如当前plugin的信息、plugin传入的配置参数信息，甚至当前节点的path信息也能获取到，当然也可以把babel插件处理过程中的自定义状态存储到state对象。
+ 
+ - Babel/Types: 这是一个处理AST很强大的一个工具它包含了构造、验证以及变换AST节点的方法。该工具库包含考虑周到的工具方法，对编写处理AST逻辑非常有用。就比如我们这个例子: 有三种基本的import方法
+   1. ``` import { BabelLoading } from 'reactloadingg' ```
+   2. ``` import  BabelLoading  from 'reactloadingg' ```
+   3. ``` import  * as Loading  from 'reactloadingg' ```.他们分别对应Types中ImportSpecifier, ImportDefaultSpecifier, ImportNamespaceSpecifier。现在可以又可以继续编写Babel插件了
+   ``` js
+    visitor: {
+	        ImportDeclaration (path, state) { 
+        	    const specifiers = path.node.specifiers;
+        	    specifiers.forEach((specifier) => {
+	                if (!types.isImportDefaultSpecifier(specifier) && !types.isImportNamespaceSpecifier(specifier)) {
+            	        // do something
+            	    }
+    	        })
+          }
+    }
+   ```
+   这边我们过滤掉第二种和第三种写法。我们只处理第一种。
