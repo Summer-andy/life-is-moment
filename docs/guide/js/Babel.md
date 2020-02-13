@@ -131,4 +131,25 @@
           }
     }
    ```
-   这边我们过滤掉第二种和第三种写法。我们只处理第一种。
+   这边我们过滤掉第二种和第三种写法。我们只处理第一种。当我们过滤掉我们不想处理的节点之后,我们得对应节点进行一些简单的处理。首先我们来明确一下我们的目标,我们想要把``` import { CommonLoaidng, BabelLoadng } from 'react-loadingg'  ``` 转化为 ``` import CommonLoadng from 'react-loadingg/lib/CommonLoadng'   ``` 和 ```  import CommonLoadng from 'react-loadingg/lib/BabelLoadng ```。好我们来看关键代码：
+
+   ```diff
+    visitor: {
+	        ImportDeclaration (path, state) { 
+        	    const specifiers = path.node.specifiers;
+        	    specifiers.forEach((specifier) => {
+	            if (!types.isImportDefaultSpecifier(specifier) &&
+              !types.isImportNamespaceSpecifier(specifier)) {
+   +         let newImports = specifiers.map(specifier => {
+   +         return types.importDeclaration(
+   +         [types.importDefaultSpecifier(specifier.local)],
+   +         types.stringLiteral(`${node.source.value}/lib/${specifier.local.name}`)
+   +        )
+   +      })
+   +       path.replaceWithMultiple(newImports)
+            	    }
+    	        })
+          }
+    }
+   ```
+   首先specifiers可能是包含多个节点的。比如CommonLoaidng和BabelLoadng,因此我们需要遍历,让我们需要将其转化为ImportSpecifier，我们使用Babel/types 中的 importDeclaration函数来操作，它的第一个参数传入节点,查看官方文档再结合我们的需求我们需要对节点做ImportDefaultSpecifier转化,第二个参数就是stringLiteral,我们传入组件包的目的地。最后一步,我们用replaceWithMultiple来完成多个AST节点替代掉当前节点。我们的简易版Babel已经完成了。它已经可以满足我们按需加载的需求了。
