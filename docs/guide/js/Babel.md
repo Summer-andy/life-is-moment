@@ -147,8 +147,8 @@
    +        )
    +      })
    +       path.replaceWithMultiple(newImports)
-            	    }
-    	        })
+   +         	    }
+   +	        })
           }
     }
    ```
