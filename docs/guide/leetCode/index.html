@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+var findUnsortedSubarray = function(nums) {
+    let p2 = 0
+    let p1 = 0
+    let max = nums[0]
+    let min = nums[nums.length - 1]
+    for (let i = 0; i < nums.length; i++) {
+        max = Math.max(max, nums[i])
+        if (nums[i] < max) {
+          console.log(i);
+            p1 = i
+        }
+    }
+    for (let i = nums.length - 1; i >= 0; i--) {
+        min = Math.min(min, nums[i])
+        if (nums[i] > min) {
+            p2 = i
+        }
+    }
+    const diff = p1 - p2
+    return diff > 0 ? diff + 1 : diff
+};
+
+findUnsortedSubarray([2, 3,6, 4, 8, 10, 9, 15])
+
+</script>
+</html>
