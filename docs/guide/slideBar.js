@@ -23,7 +23,8 @@ module.exports = [
       '/guide/leetCode/1比特与2比特字符',
       '/guide/leetCode/二进制求和',
       '/guide/leetCode/数组形式的整数加法',
-      '/guide/leetCode/分发饼干'
+      '/guide/leetCode/分发饼干',
+      '/guide/leetCode/最短无序连续子数组.md'
     ]
   },
   {
