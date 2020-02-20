@@ -4,4 +4,4 @@ cache:
 install:
   - npm
 script:
-  - npm run docs:build
+  - npm run deploy
