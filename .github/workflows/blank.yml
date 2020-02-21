@@ -11,7 +11,7 @@ jobs:
     - run: npm install
     - run: npm run docs:build
     - name: deploy file to server
-        uses: peaceiris/actions-gh-pages@v2
+        uses: JamesIves/github-pages-deploy-action@master
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           EXTERNAL_REPOSITORY: sixiaodong/sixiaodong.github.io #可以新建一个mybells.github.io仓库发布到master
