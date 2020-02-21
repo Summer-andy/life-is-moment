@@ -16,6 +16,6 @@ jobs:
     - name: npm install, build
       run: |
         npm install
-        npm run deploy
+        npm run docs:build
       env:
         CI: true
