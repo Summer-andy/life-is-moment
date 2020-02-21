@@ -7,7 +7,7 @@ module.exports = {
   themeConfig: {
     docsDir: 'docs',
     editLinks: true,
-    sidebar: require("./slidebar.js"),
+    sidebar: require("./slideBar.js"),
   },
 
 }
