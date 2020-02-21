@@ -1,8 +1,10 @@
 name: Git Action Test
+
 on:
   push:
     branches:
     - master
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
@@ -10,10 +12,12 @@ jobs:
     - uses: actions/checkout@v1
     - run: npm install
     - run: npm run docs:build
+
     - name: deploy file to server
-        uses: JamesIves/github-pages-deploy-action@master
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          EXTERNAL_REPOSITORY: sixiaodong/sixiaodong.github.io #可以新建一个mybells.github.io仓库发布到master
-          PUBLISH_BRANCH: master
-          PUBLISH_DIR: docs/.vuepress/dist'
+        uses: sixiaodong/Deploy-Action@0.0.1 
+        with:  
+          username: 'root'   #ssh user name
+          server: '139.196.82.33' #引用之前创建好的secret
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} #引用之前创建好的secret
+          local_path: 'docs/.vuepress/dist'  # 对应我们项目build的文件夹路径
+          remote_path: '/webSrc/'
