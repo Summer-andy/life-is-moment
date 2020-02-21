@@ -14,7 +14,8 @@ jobs:
       with:
         node-version: 10.x
     - name: npm install, build
-      run: |
+      run: 
+        npm install
         npm run docs:build
       env:
         CI: true

@@ -1,7 +1,16 @@
 {
+  "name": "blog",
+  "version": "1.1.0",
+  "description": "My Blog",
+  "main": "index.js",
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "deploy": "sh ./deploy.sh"
+    "deploy": "sh deploy.sh"
+  },
+  "author": "andy",
+  "license": "ISC",
+  "dependencies": {
+    "vuepress": "^1.2.0"
   }
 }
