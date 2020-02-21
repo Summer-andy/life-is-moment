@@ -14,7 +14,6 @@ jobs:
     - run: npm run docs:build
 
     - name: deploy file to server
-        uses: peaceiris/actions-gh-pages@v2
         with:  
           username: 'root'   
           server: '139.196.82.33'
