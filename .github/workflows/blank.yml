@@ -15,7 +15,6 @@ jobs:
         node-version: 10.x
     - name: npm install, build
       run: |
-        npm install
         npm install vuepress
         npm run docs:build
       env:
