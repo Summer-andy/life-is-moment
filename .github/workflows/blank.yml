@@ -14,10 +14,10 @@ jobs:
     - run: npm run docs:build
 
     - name: deploy file to server
-        uses: wlixcc/SFTP-Deploy-Action@v1.0 
+        uses: peaceiris/actions-gh-pages@v2
         with:  
-          username: 'root'   #ssh user name
-          server: '139.196.82.33' #引用之前创建好的secret
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} #引用之前创建好的secret
-          local_path: 'docs/.vuepress/dist'  # 对应我们项目build的文件夹路径
+          username: 'root'   
+          server: '139.196.82.33'
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          local_path: 'docs/.vuepress/dist'
           remote_path: '/webSrc/'
