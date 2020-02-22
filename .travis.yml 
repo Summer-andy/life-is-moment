@@ -4,4 +4,4 @@ cache:
 install:
   - npm
 script:
-  - npm run deploy
+  - bash ./deploy.sh
