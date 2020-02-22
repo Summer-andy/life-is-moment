@@ -1,21 +1,33 @@
-name: Git Action Test
-
+name: deploy to aliyun
 on:
   push:
     branches:
-    - master
-
+      - master
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - run: npm install
-    - run: npm run docs:build
-      env:
-        CI: true
-    # Deploy
-    - name: Deploy aliyun
+      # 切换分支
+      - name: Checkout
+        uses: actions/checkout@master
+      # 下载 git submodule
+      - uses: srt32/git-actions@v0.0.3
+        with:
+          args: git submodule update --init --recursive
+      # 使用 node:10
+      - name: use Node.js 10
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      # npm install
+      - name: npm install and build
+        run: |
+          npm install
+          npm run docs:build
+        env:
+          CI: true
+      # Deploy
+      - name: Deploy aliyun
         uses: easingthemes/ssh-deploy@v2.0.7
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
