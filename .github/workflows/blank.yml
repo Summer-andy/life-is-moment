@@ -29,9 +29,9 @@ jobs:
       # Deploy
       - name: Deploy aliyun
         uses: sebastianpopp/ftp-action@releases/v1
-          with:
-              host: "139.196.82.33"
-              user: "root"
-              password: ${{ secrets.FTP_PASSWORD }}
-              localDir: "./docs/.vuepress/dist/"
-              remoteDir: "/webSrc/"
+        with:
+          host: "139.196.82.33"
+          user: "root"
+          password: ${{ secrets.FTP_PASSWORD }}
+          localDir: "./docs/.vuepress/dist/"
+          remoteDir: "/webSrc/"
