@@ -1,7 +1,0 @@
-language: node_js
-cache:
-  - npm
-install:
-  - npm
-script:
-  - bash ./deploy.sh
