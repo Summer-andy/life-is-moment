@@ -28,11 +28,10 @@ jobs:
           CI: true
       # Deploy
       - name: Deploy aliyun
-        uses: easingthemes/ssh-deploy@v2.0.7
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-          ARGS: "-avz --delete"
-          SOURCE: "./docs/.vuepress/dist/"
-          REMOTE_HOST: "139.196.82.33"
-          REMOTE_USER: "root"
-          TARGET: "/webSrc/"
+        uses: sebastianpopp/ftp-action@releases/v1
+          with:
+              host: "139.196.82.33"
+              user: "root"
+              password: ${{ secrets.FTP_PASSWORD }}
+              localDir: "./docs/.vuepress/dist/"
+              remoteDir: "/webSrc/"
