@@ -74,7 +74,8 @@ module.exports = [
       '/guide/others/applePublish',
       '/guide/others/node-file',
       '/guide/others/Antdccf',
-      '/guide/others/微交互'
+      '/guide/others/微交互',
+      '/guide/others/gitActions'
     ]
   },
   {
