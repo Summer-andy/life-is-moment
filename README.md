@@ -33,6 +33,7 @@
 * [ios发布教程](./docs/guide/others/applePublish.md)
 * [glob的使用](./docs/guide/others/node-file.md)
 * [使用workflow完成打包部署一条龙的服务](./docs/guide/others/gitActions.md)
+* [一些小工具](./docs/guide/others/someTools.md)
 #### 年度总结篇
 * [2018](./docs/guide/review/2018.md)
 * [2019](./docs/guide/review/2019.md)

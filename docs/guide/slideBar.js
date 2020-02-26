@@ -75,7 +75,8 @@ module.exports = [
       '/guide/others/node-file',
       '/guide/others/Antdccf',
       '/guide/others/微交互',
-      '/guide/others/gitActions'
+      '/guide/others/gitActions',
+      '/guide/others/someTools'
     ]
   },
   {
