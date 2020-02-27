@@ -12,12 +12,13 @@
 ### Introduction
 ###### Life is moment. The more you know, the more you don't know.
 #### LeetCode篇
+
 #### 基础语法篇
 * [你不知道的Error](./docs/guide/js/Error.md)
 * [this的透彻理解](./docs/guide/js/This.md)
 * [js类型的窥探](./docs/guide/js/Type.md)
 * [js原型的窥探](./docs/guide/js/Prototype.md)
-* [揭秘Babel](./docs/guide/js/Babel.md)
+* [这一次我真的搞懂了Babel](./docs/guide/js/Babel.md)
 #### 样式学习篇
 * [css常用选择](./docs/guide/css/选择器.md)
 #### React学习篇
