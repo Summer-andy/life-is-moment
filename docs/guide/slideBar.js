@@ -61,7 +61,8 @@ module.exports = [
       '/guide/react/createElement.md',
       '/guide/react/suspense.md',
       '/guide/react/reactChildren.md',
-      '/guide/react/useReact.md'
+      '/guide/react/useReact.md',
+      '/guide/react/ReactDom.render.md'
     ]
   },
   {

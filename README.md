@@ -27,6 +27,7 @@
 * [createElement的阅读](./docs/guide/react/createElement.md)
 * [suspense的阅读](./docs/guide/react/suspense.md)
 * [Children的阅读](./docs/guide/react/reactChildren.md)
+* [ReactDOM.render()的阅读](./docs/guide/react/ReactDom.render.md)
 #### 番外篇
 * [从零部署https](./docs/guide/others/serviceHttps.md)
 * [搭建私服](./docs/guide/others/verdaccio.md)
