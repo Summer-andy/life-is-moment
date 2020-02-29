@@ -136,7 +136,7 @@ export function updateContainerAtExpirationTime(
 }
 
 ```
-updateContainerAtExpirationTime方法其实就是开始根据expirationTime执行调度任务了。
+updateContainerAtExpirationTime方法其实就是开始执行调度任务了。
 
 ##### 缘落
   我们已经大概了解了ReactDOM.render()做的事情了,但是距离我们达到天空之城最核心的地方还有段距离,我们不要慌,一步一步探索下去,一定可以达到那片最为神秘的地方。本章,我们总结一下,ReactDOM.render()执行了哪几步比较重要的步骤：
