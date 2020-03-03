@@ -1,7 +1,6 @@
 module.exports = [
   {
     title: 'leetCode篇',
-    collapsable: true,
     children: [
       '/guide/leetCode/翻转图片',
       '/guide/leetCode/宝石与石头',

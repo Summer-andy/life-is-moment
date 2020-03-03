@@ -10,6 +10,7 @@
   "author": "andy",
   "license": "ISC",
   "dependencies": {
-    "vuepress": "^1.2.0"
+    "vuepress": "^1.2.0",
+    "vuepress-theme-reco": "^1.2.2"
   }
 }
