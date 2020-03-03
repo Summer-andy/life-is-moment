@@ -12,3 +12,40 @@
   ); 
   // [ { phare: 1, order: 1 }, { phare: 2, order: 1 }, { phare: 2, order: 2 } ];
   ```
+
+- 🔥 获取当前页面滚动位置
+  ```js
+  const getScrollPosition = (el = window) => ({
+    x: el.pageXOffset !== undefined ? el.pageXOffset : el.scrollLeft,
+    y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop
+  });
+  ```
+- 🔥 平滑的滚动到页面顶部
+  ```js
+  const scrollToTop = () => {
+  const c = document.documentElement.scrollTop || document.body.scrollTop;
+  if (c > 0) {
+    window.requestAnimationFrame(scrollToTop);
+    window.scrollTo(0, c - c / 8);
+  }
+  }
+  ```
+- 🔥 判断当前元素在当前视图能够被看见
+  ```js
+  const elementIsVisibleInViewport = el => {
+    const { top, left, bottom, right } = el.getBoundingClientRect();
+    const { innerHeight, innerWidth } = window;
+    return top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth;
+  };
+  ```
+- 判断当前环境是手机和pc电脑环境
+  ```js
+  const detectDeviceType = () =>
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      ? 'Mobile'
+      : 'Desktop';
+  ```
+- 判断当前浏览器选项卡是否聚焦
+  ```js
+  const isBrowserTabFocused = () => !document.hidden;
+  ```  
