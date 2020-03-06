@@ -1,16 +1,14 @@
 {
-  "name": "blog",
-  "version": "1.1.0",
-  "description": "My Blog",
-  "main": "index.js",
+  "name": "my-blog",
+  "version": "1.0.0",
+  "author": "reco_luan",
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
   },
-  "author": "andy",
-  "license": "ISC",
-  "dependencies": {
-    "vuepress": "^1.2.0",
-    "vuepress-theme-reco": "^1.2.2"
-  }
+  "devDependencies": {
+    "vuepress": "1.2.0",
+    "vuepress-theme-reco": "1.2.2"
+  },
+  "description": ""
 }
