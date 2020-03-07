@@ -2,7 +2,7 @@
 title: HOC的学习
 date: 2017-09-21
 tags:
-  - React基本使用
+  - React基础
 categories:
   - React
 ---

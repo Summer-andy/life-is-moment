@@ -1,6 +1,6 @@
 module.exports = {
-  "title": "",
-  "description": "",
+  "title": "life is moment",
+  "description": "把所有的不快留给昨天,把所有的努力付诸于今天,把所有的希望寄托给明天。",
   "dest": "public",
   "head": [
     [
@@ -78,7 +78,7 @@ module.exports = {
       //   "link": "https://vuepress-theme-reco.recoluan.com"
       // }
     ],
-    "logo": "/logo.png",
+    // "logo": "/logo.png",
     "search": true,
     "searchMaxSuggestions": 10,
     "sidebar": "auto",
