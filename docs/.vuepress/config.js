@@ -65,12 +65,12 @@ module.exports = {
       }
     },
     "friendLink": [
-      // {
-      //   "title": "午后南杂",
-      //   "desc": "Enjoy when you can, and endure when you must.",
-      //   "email": "1156743527@qq.com",
-      //   "link": "https://www.recoluan.com"
-      // },
+      {
+        "title": "react-loadingg",
+        "desc": "一款精美的Loading组件库",
+        "email": "3450236968@qq.com",
+        "link": "https://www.npmjs.com/package/react-loadingg"
+      },
       // {
       //   "title": "起风了唯有努力生存",
       //   "desc": "A simple and beautiful vuepress Blog & Doc theme.",
