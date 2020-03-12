@@ -1,14 +1,14 @@
 ---
 title: 这一次我真的搞懂了Babel
-date: 2019-10-31
+date: 2020-03-10
 tags:
   - js基础
 categories:
   - 前端基础
 ---
-
+::: tip
    前言: 之前虽然大致看了看Babel相关的知识,但是并没有深入了解。本文前半部分先详细介绍一下Babel是如何编译JS代码并且转化为浏览器能够理解的代码, 后半部分将会实现一个简单的babel插件。
-
+:::
 #### 什么是Babel？
     Babel is a compiler for writing next generation JavaScript.Babel是编写下一代JavaScript的编译器。
 

@@ -1,6 +1,6 @@
 ---
 title: 动态语言类型和鸭子类型
-date: 2019-09-21
+date: 2020-03-08
 tags:
  - 设计模式
 categories:

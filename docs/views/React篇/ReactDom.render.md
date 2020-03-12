@@ -1,14 +1,14 @@
 ---
 title:  ReactDOM.render的阅读
-date: 2019-10-31
+date: 2020-03-04
 tags:
   - React源码
 categories:
   - React
 ---
-
+::: tip
 ##### 前言: 工欲善其事必先利其器。当我在使用React编写代码的时候, 总是会有一个疑问, 我写的代码到底是不是React的最佳实践。带着这个疑问, 我就开始了React的源码之旅。
-
+:::
 ##### 缘起
 一切的一切都要从它说起, ` ReactDOM.render(<App />, 'root') `。它是我们整个应用的入口, 是我们开启React这块天空之城的飞行石。
 
