@@ -75,3 +75,34 @@ categories:
   ::: tip
 - [获取省级（省份直辖市自治区）、 地级（城市）、 县级（区县）、 乡级（乡镇街道）、 村级（村委会居委会)中国省市区镇村二级三级四级五级联动地址数据五级联动地址](https://github.com/modood/Administrative-divisions-of-China)
   ::: 
+
+
+  ::: tip
+- [React缓存路由(类似vue中的keep-alive)](https://github.com/CJY0208/react-router-cache-route)
+  :::
+
+  ```js
+  import React from 'react'
+  import { HashRouter as Router, Route } from 'react-router-dom'
+  import CacheRoute, { CacheSwitch } from 'react-router-cache-route'
+  import List from './views/List'
+  import Item from './views/Item'
+  const App = () => (
+    <Router>
+      <CacheSwitch>
+        <CacheRoute exact path="/list" component={List} />
+        <Route exact path="/item/:id" component={Item} />
+        <Route render={() => <div>404 Not Found</div>} />
+      </CacheSwitch>
+    </Router>
+  )
+  export default App
+  ```
+  ::: tip
+- [React pdf预览插件](https://github.com/forthealllight/react-read-pdf)
+  :::
+  
+  ```js
+  import { PDFReader } from 'react-read-pdf'
+  <PDFReader url={"http://localhost:3000/test.pdf"} ...> // 同时也支持base64
+  ```

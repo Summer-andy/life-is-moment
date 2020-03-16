@@ -20,6 +20,10 @@ module.exports = {
   ],
   theme: 'reco',
   themeConfig: {
+    record: '浙ICP备18043926号',
+    recordLink: 'http://www.beian.miit.gov.cn',
+    // cyberSecurityRecord: '公安部备案文案',
+    // cyberSecurityLink: '公安部备案指向链接',
     nav: [
       {
         text: 'Home',
