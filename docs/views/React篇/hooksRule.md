@@ -17,12 +17,17 @@ categories:
   简单来说Hooks规则就是我们在使用Hooks编写程序的时候需要遵循的规范。
 
   ::: warning
-   不要在循环,条件或者嵌套函数中调用Hooks.
+   不要在循环,条件或者嵌套函数中调用Hook.
+  :::
+
+
+  ::: warning
+   不要在普通的 JavaScript 函数中调用 Hook.
   :::
 
 ### 实战应用(入坑版)  
 
-  我们接下来将会举错误的例子,并且将会分析为什么不能这么写, 这么写会导致什么错误发生。
+  我们接下来将会举一个错误的例子,并且将会展开分析为什么不能这么写, 这么写会导致什么错误发生。
   
   ⚠️ 错误示例(非完整版):
   
@@ -30,7 +35,7 @@ categories:
   import React, { Fragment, useState, useEffect } from 'react';
 
   const Child = () => {
-    const [title, setTitle] = useState('Hello Word!');
+    const [title, setTitle] = useState('Hello World!');
     return <h1>{title}</h1>;
   };
 
@@ -55,9 +60,9 @@ categories:
   // ------------
 
   useState([0, 1, 2]) // 使用[0, 1, 2]数组初始化arr
-  useState('Hello Word!') // 使用'Hello Word!'初始化title
-  useState('Hello Word!') // 使用'Hello Word!'初始化title
-  useState('Hello Word!') // 使用'Hello Word!'初始化title
+  useState('Hello World!') // 使用'Hello World!'初始化title
+  useState('Hello World!') // 使用'Hello World!'初始化title
+  useState('Hello World!') // 使用'Hello World!'初始化title
 
 
   // ------------
@@ -65,9 +70,9 @@ categories:
   // ------------
 
   useState([0, 1, 2]) // 读取变量名为arr的state
-  useState('Hello Word!') // 读取变量名为title的state - (A hook)
-  useState('Hello Word!') // 读取变量名为title的state - (B hook)
-  useState('Hello Word!') // 读取变量名为title的state - (C hook)
+  useState('Hello World!') // 读取变量名为title的state - (A hook)
+  useState('Hello World!') // 读取变量名为title的state - (B hook)
+  useState('Hello World!') // 读取变量名为title的state - (C hook)
   ```
   
   以上就是Hooks的调用顺序了,上述这段代码确实没有什么问题,也可以正常执行。接下来我们稍微修改一下代码。
@@ -76,7 +81,7 @@ categories:
   import React, { Fragment, useState, useEffect } from 'react';
 
   const Child = () => {
-    const [title, setTitle] = useState('Hello Word!');
+    const [title, setTitle] = useState('Hello World!');
     return <h1>{title}</h1>;
   };
 
@@ -109,8 +114,8 @@ categories:
   // ------------
 
   useState([0, 1]) // 读取变量名为arr的state
-  useState('Hello Word!') // 读取变量名为title的state
-  useState('Hello Word!') // 读取变量名为title的state
+  useState('Hello World!') // 读取变量名为title的state
+  useState('Hello World!') // 读取变量名为title的state
   ```
 
   我们发现程序抛出异常了,原因是: 重新渲染后的钩子比预期的钩子要少。
@@ -126,7 +131,7 @@ categories:
   import React, { Fragment, useState, useEffect } from 'react';
 
   const Child = () => {
-    const [title, setTitle] = useState('Hello Word!');
+    const [title, setTitle] = useState('Hello World!');
     return <h1>{title}</h1>;
   };
 
@@ -155,7 +160,7 @@ categories:
   ### 深入Hooks源码架构设计
 
    :::warning
-     为了保证大家都能看懂,下面的内容不会涉及Hooks源码解析。 
+     为了保证大家都能看懂,下面的内容不会过多地涉及Hooks源码解析。 
    :::
 
    首先我们得明白, Hook的更新流程是通过链表完成的。如果大家对于为什么用链表感兴趣的可以去看这篇文章: [无意识设计-复盘React Hook的创造过程](https://github.com/shanggqm/blog/issues/4)。
@@ -167,9 +172,9 @@ categories:
    -  组件初次渲染的时候
          
         +   使用[0, 1, 2]数组初始化arr: ``` firstWorkInProgressHook = workInProgressHook = hook1 ```
-        +   使用'Hello Word!'初始化title: ``` workInProgressHook = workInProgressHook.next = hook2 ```
-        +   使用'Hello Word!'初始化title: ``` workInProgressHook = workInProgressHook.next = hook3 ```
-        +   使用'Hello Word!'初始化title: ``` workInProgressHook = workInProgressHook.next = hook4 ```
+        +   使用'Hello World!'初始化title: ``` workInProgressHook = workInProgressHook.next = hook2 ```
+        +   使用'Hello World!'初始化title: ``` workInProgressHook = workInProgressHook.next = hook3 ```
+        +   使用'Hello World!'初始化title: ``` workInProgressHook = workInProgressHook.next = hook4 ```
   
 
 
@@ -195,32 +200,33 @@ categories:
             // ...
         },
         next: {
-            memoizedState: 'Hello Word!',
+            memoizedState: 'Hello World!',
             queue: {
                 // ...
             },
-            next: 'Hello Word'
+            next: 'Hello World'
         }
     },
 
     // ...
     memoizedState: {
-        memoizedState: 'Hello Word', 
+        memoizedState: 'Hello World', 
         queue: {
             // ...
         },
         next: {
-            memoizedState: 'Hello Word!',
+            memoizedState: 'Hello World!',
             queue: {
                 // ...
             },
-            next: null
+            next: 'Hello World'
         }
     },
 
     //...
 }
    ```
+
   ::: danger
       整个链表是在mount时构造的,因此当我们执行update操作的时候一定要保证执行顺序,
       不然的话整个链表就乱了。这时候, 我们联想到Hooks的第一条规则: 不要在循环,条件
@@ -228,4 +234,54 @@ categories:
       我们复盘一下, 上面的错误例子，加深一下我们的印象。
   :::
 
-  
+  我们先描绘初始化hook时候的样子:
+
+  ![image](./img/fiber.png)
+
+  当我们执行更新arr操作的时候, ``` setArr([0, 1])  ```, 第三个hook的next会找不到下一个节点.因此会在finishHooks的时候会抛出异常。我们可以在``` react-dom.development.js ```看到
+  我们更新到第三个hooks的时候, 会出现找不到下一个hook的情况, 因此``` didRenderTooFewHooks ``` 为 ```false```。所以抛出了上面例子中的异常。
+  ``` js
+   // 源码部分
+   function finishHooks() {
+    // ...
+    var didRenderTooFewHooks = currentHook !== null && currentHook.next !== null;
+    // ...
+    !!didRenderTooFewHooks ? invariant(false, 'Rendered fewer hooks than expected. This may be caused by an accidental early return statement.') : void 0;
+    // ...
+   }
+  ```
+
+  ### 总结:
+      
+  -  由于hook大量采用了链表的结构, 因此我们在使用Hook编写程序的时候, 应该清楚每一次执行更新的时候是否会造成链表顺序结构的改变。
+  -  如果我们真的需要在循环,条件或者嵌套函数中调用Hook,那么我们可以将被调用的Hook转化成一个独立的React组件。
+  ``` diff
+  import React, { Fragment, useState, useEffect } from 'react';
+
+  const Child = () => {
+    const [title, setTitle] = useState('Hello World!');
+    return <h1>{title}</h1>;
+  };
+
+  const Layout = () => {
+    const [arr, setArr] = useState([0, 1, 2]);
+    const renderItem = () => {
+ +     return arr.map((_, index) => {
+ -     return arr.map(() => {
+ -       return Child();
+ +       return <Child key={index} />
+      });
+    };
+ 
+    useEffect(() => {
+      setTimeout(() => {
+       setArr([0, 1])
+     }, 500);
+   }, [])
+
+    return <Fragment>{renderItem()}</Fragment>;
+  };
+
+  export default Layout;
+  ```
+   
