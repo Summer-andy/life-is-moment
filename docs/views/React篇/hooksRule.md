@@ -1,5 +1,5 @@
 ---
-title: 深度理解Hooks规则
+title: 深度理解Hook规则
 date: 2020-04-11
 tags:
   - React基础
@@ -52,7 +52,7 @@ categories:
   export default Layout;
   ```
   
-  我们都知道在组件中使用state hooks和effect hooks,靠的是Hooks的调用顺序,这样React才能知道哪个state对应那个useState。那么我们先来捋一下上述示例代码Hooks的调用顺序。
+  我们都知道在组件中使用state hooks和effect hooks,靠的是Hook的调用顺序,这样React才能知道哪个state对应那个useState。那么我们先来捋一下上述示例代码Hooks的调用顺序。
 
   ```js
   // ------------
@@ -285,3 +285,10 @@ categories:
   export default Layout;
   ```
    
+  ### 参考文档:
+   
+   [无意识设计-复盘React Hook的创造过程](https://github.com/shanggqm/blog/issues/4)
+
+   [Hook规则](https://zh-hans.reactjs.org/docs/hooks-rules.html)
+   
+   [React Hooks 进阶](https://github.com/SunShinewyf/issue-blog/issues/50)
