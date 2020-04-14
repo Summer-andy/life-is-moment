@@ -90,4 +90,44 @@ categories:
 
 | 选择器  |     描述 |
 | :----- | -------: |
-| E:first-child |  作为父元素的第一个子元素的元素 E。与 E:nth-child(1) 等同   |
+| E:first-child |  作为父元素的第一个子元素的元素 E  |
+| E:last-child| 作为父元素的最后一个元素E |
+| E:root | 根元素的html |
+| E F:nth-child(n) | 选择E元素下面第n个F元素 | 
+| E F:nth-last-child(n) | 选择E元素倒数第n个F元素 | 
+| E:nth-of-type(n)| 第n个E元素 |
+| E:nth-last-of-type(n)| 倒数第n个E元素 |
+| E:first-of-type(n)| nth-of-type(1)  |
+| E:last-of-type(n)| nth-last-of-type(1)  |
+| E:one-child| 只有一个子元素的E元素 |
+| E:only-of-type| 只包含一个同类型非元素  |
+| E:empty| 子元素为空的E元素  |
+
+#### 否定伪类选择器
+
+| 选择器  |     描述 |
+| :----- | -------: |
+| E:not(F) | 匹配所有除了F元素的E元素 |
+
+
+#### 伪元素
+
+| 选择器  |     描述 |
+| :----- | -------: |
+| ::first-letter | 文本块的第一个字母 |
+| ::first-line | 文本的第一行 |
+| ::after | 在元素的后面添加内容  | 
+| ::before | 在元素前面添加内容 |
+| ::selection | 匹配突出显示文本 |
+
+
+#### 属性选择器
+
+| 选择器  |     描述 |
+| E[attr] | 具有自定义属性的元素 |
+| E[attr = val] | 具有自定义属性为val的元素 |
+| E[attr |= val] | 自定义元素是以val 或者以val开头的元素 |
+| E[attr ~= val] | 自定义元素是由多个空格分隔的值其中一个值为val |
+| E[attr *= val] | 自定义属性包含val的元素 |
+| E[attr ^= val] | 自定义属性以val开头的元素 |
+| E[attr $= val] | 自定义属性以val结尾的元素 |
