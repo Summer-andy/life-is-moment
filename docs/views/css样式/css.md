@@ -124,9 +124,10 @@ categories:
 #### 属性选择器
 
 | 选择器  |     描述 |
+| :----- | -------: |
 | E[attr] | 具有自定义属性的元素 |
 | E[attr = val] | 具有自定义属性为val的元素 |
-| E[attr |= val] | 自定义元素是以val 或者以val开头的元素 |
+| E[attr |= val] | 自定义元素是以val 或者以val-开头的元素 |
 | E[attr ~= val] | 自定义元素是由多个空格分隔的值其中一个值为val |
 | E[attr *= val] | 自定义属性包含val的元素 |
 | E[attr ^= val] | 自定义属性以val开头的元素 |
