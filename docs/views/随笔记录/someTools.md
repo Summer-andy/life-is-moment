@@ -111,3 +111,37 @@ categories:
   ::: tip
 - [React虚拟列表组件](https://github.com/bvaughn/react-virtualized)
   :::
+
+  ::: tip
+- [React优雅的提示插件](https://github.com/fkhadra/react-toastify)
+  :::
+
+  ```js
+
+  import { toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
+  toast.warn("Warning Notification !", {
+    position: toast.POSITION.BOTTOM_LEFT
+  });
+
+  ```
+
+  ::: tip
+- [模糊延迟加载图片插件](https://github.com/Aljullu/react-lazy-load-image-component)
+  :::
+
+  ```js
+  import { LazyLoadImage } from 'react-lazy-load-image-component';
+
+  const MyImage = ({ image }) => (
+    <div>
+      <LazyLoadImage
+        alt={image.alt}
+        height={image.height}
+        src={image.src} // use normal <img> attributes as props
+        width={image.width} />
+      <span>{image.caption}</span>
+    </div>
+  );
+  ```
