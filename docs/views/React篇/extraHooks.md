@@ -359,3 +359,97 @@ export default App;
       )
 
    ```
+
+   - 监听窗口变化
+
+  ```js
+
+  import { useState, useEffect } from 'react';
+
+  // Usage
+  function App() {
+    const size = useWindowSize();
+
+    return (
+      <div>
+        {size.width}px / {size.height}px
+      </div>
+    );
+  }
+
+  // Hook
+  function useWindowSize() {
+    const isClient = typeof window === 'object';
+
+    function getSize() {
+      return {
+        width: isClient ? window.innerWidth : undefined,
+        height: isClient ? window.innerHeight : undefined
+      };
+    }
+
+    const [windowSize, setWindowSize] = useState(getSize);
+
+    useEffect(() => {
+      if (!isClient) {
+        return false;
+      }
+      
+      function handleResize() {
+        setWindowSize(getSize());
+      }
+
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []); // Empty array ensures that effect is only run on mount and unmount
+
+    return windowSize;
+  }
+
+  ```
+
+- 监听鼠标是否在当前元素上
+
+    ```js
+    import { useRef, useState, useEffect } from 'react';
+    
+    // Usage
+    function App() {
+      const [hoverRef, isHovered] = useHover();
+
+      return (
+        <div ref={hoverRef}>
+          {isHovered ? '😁' : '☹️'}
+        </div>
+      );
+    }
+
+    // Hook
+    function useHover() {
+      const [value, setValue] = useState(false);
+
+      const ref = useRef(null);
+
+      const handleMouseOver = () => setValue(true);
+      const handleMouseOut = () => setValue(false);
+
+      useEffect(
+        () => {
+          const node = ref.current;
+          if (node) {
+            node.addEventListener('mouseover', handleMouseOver);
+            node.addEventListener('mouseout', handleMouseOut);
+
+            return () => {
+              node.removeEventListener('mouseover', handleMouseOver);
+              node.removeEventListener('mouseout', handleMouseOut);
+            };
+          }
+        },
+        [ref.current] // Recall only if ref changes
+      );
+
+      return [ref, value];
+    }
+
+    ```
