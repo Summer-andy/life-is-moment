@@ -453,3 +453,37 @@ export default App;
     }
 
     ```
+
+ - 使用 useRef 缓存上一次的值
+
+  ```js
+  import React, { Fragment, useState, useEffect, useRef } from 'react';
+
+  const usePrevious = (value) => {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  };
+
+  const Layout = () => {
+    const initCount = (value = 0) => value;
+    const [now, setNow] = useState(() => initCount());
+    const pre = usePrevious(now);
+
+    const handleClick = () => {
+      setNow(1);
+    };
+
+    return (
+      <Fragment>
+        <p>now is {now}</p>
+        <p>pre is {pre}</p>
+        <button onClick={handleClick}>改变state</button>
+      </Fragment>
+    );
+  };
+
+  export default Layout;
+  ```
