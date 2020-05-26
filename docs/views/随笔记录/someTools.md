@@ -178,3 +178,15 @@ categories:
  
   getStyle(dom, 'paddingLeft') // 使用示例
   ```
+
+  ::: tip
+    标签内容长度的精确计算
+  :::
+
+  ```js
+    const element = dom 
+    const range  = document.createRange();
+    range.setStart(element, 0);
+    range.setEnd(element, element.childNodes.length
+    range.getBoundingClientRect().width  
+  ```
