@@ -1,6 +1,6 @@
 ---
 title: 📝 记录一些平时小工具以及函数库
-date: 2020-04-27
+date: 2020-05-27
 tags:
  - 随笔记录
 categories:
@@ -180,13 +180,13 @@ categories:
   ```
 
   ::: tip
-    标签内容长度的精确计算
+   - 标签内容长度的精确计算
   :::
 
   ```js
-    const element = dom 
+    const element = dom   // 获取标签元素
     const range  = document.createRange();
     range.setStart(element, 0);
-    range.setEnd(element, element.childNodes.length
+    range.setEnd(element, element.childNodes.length)
     range.getBoundingClientRect().width  
   ```
