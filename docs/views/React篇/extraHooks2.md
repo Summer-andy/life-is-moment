@@ -19,39 +19,17 @@ categories:
 
 ## useAsync
 
+### 📚 简单描述
+  
+  使用自定义钩子, 将异步函数作为输入, 将返回的值、状态、是否立即执行异步函数作为输出, 我们可以很方便地来跟踪异步调用的状态。
 
-### ✨动画效果
+
+### ✨ 动画效果
+
+![image](./useAsync.gif)
 
 
-
-### 🚀自定义Hook
-```js
-const useAsync = (asyncFunction, immediate = true) => {
-  const [pending, setPending] = useState(false);
-  const [value, setValue] = useState(null);
-  const [error, setError] = useState(null);
-
-  const execute = useCallback(() => {
-    setPending(true);
-    setValue(null);
-    setError(null);
-    return asyncFunction()
-      .then(response => setValue(response))
-      .catch(error => setError(error))
-      .finally(() => setPending(false));
-  }, [asyncFunction]);
-
-  useEffect(() => {
-    if (immediate) {
-      execute();
-    }
-  }, [execute, immediate]);
-
-  return { execute, value, pending, error };
-};
-```
-
-### 🌰使用示例
+### 🌰 使用示例
 
 ```js
   import React from 'react';
@@ -79,4 +57,31 @@ const useAsync = (asyncFunction, immediate = true) => {
   }
 
   export default App;
+```
+
+### 🚀 自定义Hook
+```js
+const useAsync = (asyncFunction, immediate = true) => {
+  const [pending, setPending] = useState(false);
+  const [value, setValue] = useState(null);
+  const [error, setError] = useState(null);
+
+  const execute = useCallback(() => {
+    setPending(true);
+    setValue(null);
+    setError(null);
+    return asyncFunction()
+      .then(response => setValue(response))
+      .catch(error => setError(error))
+      .finally(() => setPending(false));
+  }, [asyncFunction]);
+
+  useEffect(() => {
+    if (immediate) {
+      execute();
+    }
+  }, [execute, immediate]);
+
+  return { execute, value, pending, error };
+};
 ```
