@@ -107,7 +107,6 @@ categories:
   <PDFReader url={"http://localhost:3000/test.pdf"} ...> // 同时也支持base64
   ```
 
-    ```
   ::: tip
 - [React虚拟列表组件](https://github.com/bvaughn/react-virtualized)
   :::
