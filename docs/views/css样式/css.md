@@ -1,4 +1,4 @@
----
+<!-- ---
 title: css3吐血整理系列(上)
 date: 2020-04-12
 tags:
@@ -131,4 +131,4 @@ categories:
 | E[attr ~= val] | 自定义元素是由多个空格分隔的值其中一个值为val |
 | E[attr *= val] | 自定义属性包含val的元素 |
 | E[attr ^= val] | 自定义属性以val开头的元素 |
-| E[attr $= val] | 自定义属性以val结尾的元素 |
+| E[attr $= val] | 自定义属性以val结尾的元素 | -->
