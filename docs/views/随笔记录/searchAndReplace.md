@@ -81,7 +81,7 @@ element.innerHTML = element.innerHTML.replace(/\bandy\w*\b/gi,'summer');
 
   ## Questions
 
-   - Q1: 假如DOM是这样的, p标签里面的span标签是动态生成的并且还附加了事件绑定, 同时span可能在``` i am andy ``` 之前, 也可能在它之后, 此时如何替换```andy``` ?
+   - Q1: 假如DOM是动态的, p标签里面的span标签是动态生成的并且还附加了事件绑定, 同时span可能在``` i am andy ``` 之前, 也可能在它之后, 此时如何替换```andy``` ?
 
    ```html
   	<div id="container">
@@ -90,7 +90,7 @@ element.innerHTML = element.innerHTML.replace(/\bandy\w*\b/gi,'summer');
 		</div>
    ``` 
 
-    - Q2: 假如一个单词跨节点了, 我们该如何处理？难道还是使用innerText直接全部替换吗？这显然是不正确的, 因为当你完成替换后, 之前的span标签都丢失了。
+  - Q2: 假如一个单词跨节点了, 我们该如何处理？难道还是使用innerText直接全部替换吗？这显然是不正确的, 因为当你完成替换后, 之前的span标签都丢失了。
 
     ```html
 	  <div id="container">
@@ -98,3 +98,67 @@ element.innerHTML = element.innerHTML.replace(/\bandy\w*\b/gi,'summer');
 			<button id="btn">替换文本</button>
 		</div>
     ```
+
+  - Q3: 最关键的一个问题, 你如何保证替换节点的准确性, 通俗的来讲, 就是你如何保证匹配的节点在正确的位置分割，并替换。
+
+   我为什么会跟大家讨论这个话题呢？在前段时间, 我需要对已有产品中的功能模块做截图, 但是我需要对模块中的名称做替换, 从事前端的同学, 可能会想着直接浏览器
+   f12修改就完事儿了。可是对于一些像我这样的手残党, 会一不小心按下刷新键。假设模块中的100处```andy```都要改成```summer```,那不得累死。因此我决定周末抽时间开发
+   一款文本替换的谷歌插件。在谷歌商店的的确确有这样的插件, 有兴趣的同学可以去商店下载, 你会发现,比如下载量和使用量最高的 ``` search and replace ``` 是有问题的,
+   当替换完文本后, 作用于页面上的事件绑定都失效了。 那么我们应该如何解决呢？
+   
+   ::: warning
+   如果你有这个需求, 没有时间了解原理的话, 可以直接使用现成的插件。[https://github.com/Summer-andy/chrome-extensions-searchReplace](https://github.com/Summer-andy/chrome-extensions-searchReplace)。
+   ::: 
+
+## 设计思路
+
+  正确的思路应该是在文本节点上做文章。文本节点和元素节点的处理方式是一样的, 但是它们俩的关键区别在于:
+
+  - 文本节点不会有子节点
+  - 文本节点的所有信息都在data(或者nodeValue)属性里
+  - 文本节点中不会有任何样式, 不会有任何事件,单单只有文本
+
+  ### 1.解析DOM
+
+  ```html
+    <p>
+        <a href="https://github.com/Summer-andy/chrome-extensions-searchReplace">summer</a>
+        i am andy
+    </p>
+  ```
+
+  将上面这段代码转化为我们想要的DOM结构(提取出TEXT NODE)
+
+  ```text
+     -> P ELEMENT
+        -> TEXT NODE (data: "\n   ")
+        -> A ELEMENT (href: "https://github.com/Summer-andy/chrome-extensions-searchReplace")
+            -> TEXT NODE (data: "summer" )
+        -> TEXT NODE (data: "\n i am andy \n")   
+  ```
+
+  ### 2.遍历DOM,标记出匹配文本节点
+
+  ```js
+      {
+        node: #text // 找出文本节点
+        text: 'andy'
+      }
+  ```
+
+### 3.根据文本节点获取父元素, 并且追加一个新的元素
+
+```js
+ const precedingTextNode = 'summer'; // 这个precedingTextNode可以是元素节点也可以是文本节点
+ node.parentNode.insertBefore(precedingTextNode, node); // 在文本节点之前插入新的元素(node表示匹配的文本节点)
+```
+
+### 4.删除匹配文本节点
+
+```js
+  node.parentNode.removeChild(node);
+```
+
+## 解析DOM
+
+ ### 
