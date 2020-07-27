@@ -159,6 +159,156 @@ element.innerHTML = element.innerHTML.replace(/\bandy\w*\b/gi,'summer');
   node.parentNode.removeChild(node);
 ```
 
+::: warning
+接下来的例子都将使用这段html来演示: 
+:::
+
+``` html
+<div id="container">
+<h3>Th<a>is</a>text
+<button>123</button>
+<h4>is This</h4>
+</h3>
+</div>
+```
+
 ## 解析DOM
 
- ### 
+ ### 遍历容器中的节点,过滤出文本节点
+
+ ```js
+  function getText(node) { 
+
+    // 如果是文本节点直接返回节点的data
+    if (node.nodeType === Node.TEXT_NODE) {
+      return [node.data];
+    }
+    var txt = [''];
+    var i = 0;
+    if (node = node.firstChild) do {
+      if (node.nodeType === Node.TEXT_NODE) {
+        txt[i] += node.data;
+        continue;
+      }
+      var innerText = getText(node);
+
+      // 判断遍历到的节点是否是块级元素标签
+      if (
+        forceContext &&
+        node.nodeType === Node.ELEMENT_NODE &&
+        (forceContext === true || forceContext(node)) 
+      ) {
+        txt[++i] = innerText;
+        txt[++i] = '';
+      } else {
+        if (typeof innerText[0] === 'string') {
+          txt[i] += innerText.shift();
+        }
+        if (innerText.length) {
+          txt[++i] = innerText;
+          txt[++i] = '';
+        }
+      }
+    } while (node = node.nextSibling);
+    return txt;
+  }
+ ```
+
+ 相信这一步对于大家来说应该并不难。无非就是递归遍历节点的类型。我们来看看最后得到的是什么样的数据
+
+ ```js
+0: "↵"
+1: ["Thistext↵", ["123"], "↵"]  
+2: ""
+3: ["is This"]
+4: "↵↵"
+ ```
+
+ ### 将遍历得到的文本节点进行正则匹配校验
+
+ ```js
+  function matchAggregation(textAggregation) {
+    for (var i = 0, l = textAggregation.length; i < l; ++i) {
+
+      var text = textAggregation[i];
+
+      if (typeof text !== 'string') {
+        matchAggregation(text);
+        continue;
+      }
+
+      if (regex.global) {
+        while (match = regex.exec(text)) {
+          matches.push(self.prepMatch(match, matchIndex++, offset));
+        }
+      } else {
+        if (match = text.match(regex)) {
+          matches.push(self.prepMatch(match, 0, offset));
+        }
+      }
+
+      offset += text.length;
+    }
+  }
+
+	function prepMatch(match, matchIndex, characterOffset) {
+
+    if (!match[0]) {
+      throw new Error('findAndReplaceDOMText cannot handle zero-length matches');
+    }
+
+    match.endIndex = characterOffset + match.index + match[0].length;
+    match.startIndex = characterOffset + match.index;
+    match.index = matchIndex;
+
+    return match;
+  }
+
+ ```
+
+ 这一步的目的是为了遍历文本节点获取在目标文本中所处的位置(主要是开始和结束的索引).比如我们匹配this这个单词。那么这个匹配结果就是
+
+ ```js
+
+ [
+   [
+     0: "This"
+    endIndex: 5
+    groups: undefined
+    index: 0
+    input: "Thistext↵"
+    startIndex: 1
+   ],
+   [
+     0: "This"
+    endIndex: 21
+    groups: undefined
+    index: 1
+    input: "is This"
+    startIndex: 17
+   ]
+ ]
+
+ ```
+
+ ### 将经过正则匹配后的结果与实际文本节点结合
+
+  此时我们会遇到两个问题, 跨节点的文本我们应该如何处理。
+
+  举个例子(为了看着舒服点, 我将DOM层级展开), 
+
+```html
+<div id="container">
+<h3>
+  Th
+  <a>is</a>
+  text
+  <button>123</button>
+  <h4>is This</h4>
+</h3>
+</div>
+```
+
+  我们匹配的字符串是```This```, 那么如何处理``` Th<a><is/a> ``` 这类的跨节点文本呢？ 目前由于本人水平限制, 暂时没有想到好的处理方案,如果你有好的idea欢迎
+  [issue](https://github.com/Summer-andy/chrome-extensions-searchReplace/issues)。我们继续讨论正常的文本节点, 
+
