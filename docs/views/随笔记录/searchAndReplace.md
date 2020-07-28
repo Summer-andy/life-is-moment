@@ -165,66 +165,146 @@ element.innerHTML = element.innerHTML.replace(/\bandy\w*\b/gi,'summer');
 
 ``` html
 <div id="container">
-<h3>Th<a>is</a>text
+<div>Th<a>is</a>text
 <button>123</button>
 <h4>is This</h4>
-</h3>
+</div>
 </div>
 ```
 
 ## 解析DOM
 
- ### 遍历容器中的节点,过滤出文本节点
+ ### 思考如何归并文本节点
+
+  ::: warning
+  目前我们只考虑两种文本节点情况
+  :::  
+
+  1. 非跨节点文本
+
+  诸如:
+
+  ```html
+    <p> summer </p>
+  ```
+
+  ```html
+    <h4>summer</h4>
+  ```
+
+  2. 非块级元素跨文本节点
+
+  诸如: 
+
+  ```html
+    <p>
+      <span>sum</span><a>mer</a>
+    </p>
+  ```
+
+  ```html
+    <p>
+      sum<a>mer</a>
+    </p>
+  ```
+
+  因此我们将以上两种情况的文本节点统一合并成一个文本处理。如果遇到块级元素, 则重新生成一个新的文本节点。
+
+ ### 编写一个判断是否是块级元素的函数
+
+  - 定义块级元素集合
+
+```js
+const block =  {
+  address:1, article:1, aside:1, blockquote:1, dd:1, div:1,
+  dl:1, fieldset:1, figcaption:1, figure:1, footer:1, form:1, h1:1, h2:1, h3:1,
+  h4:1, h5:1, h6:1, header:1, hgroup:1, hr:1, main:1, nav:1, noscript:1, ol:1,
+  output:1, p:1, pre:1, section:1, ul:1,
+  br:1, li: 1, summary: 1, dt:1, details:1, rp:1, rt:1, rtc:1,
+  script:1, style:1, img:1, video:1, audio:1, canvas:1, svg:1, map:1, object:1,
+  input:1, textarea:1, select:1, option:1, optgroup:1, button:1,
+  table:1, tbody:1, thead:1, th:1, tr:1, td:1, caption:1, col:1, tfoot:1, colgroup:1
+};
+```
+
+ - 判断节点的NodeName是否存在于block中
 
  ```js
-  function getText(node) { 
+  function forceContext(el) {
+      return {}.hasOwnProperty.call(block, el.nodeName.toLowerCase());
+  };
+ ```
+   
+ ###  遍历获得文本节点数组
 
-    // 如果是文本节点直接返回节点的data
+ ```js
+ function getAggregateText() {
+
+	const nodeTest = document.getElementById('container'); // 模拟替换节点的容器
+
+	return getText(nodeTest);
+
+	function getText(node) { 
+
     if (node.nodeType === Node.TEXT_NODE) {
       return [node.data];
     }
+
     var txt = [''];
     var i = 0;
+
     if (node = node.firstChild) do {
+      
       if (node.nodeType === Node.TEXT_NODE) {
         txt[i] += node.data;
         continue;
       }
+
       var innerText = getText(node);
 
-      // 判断遍历到的节点是否是块级元素标签
-      if (
-        forceContext &&
-        node.nodeType === Node.ELEMENT_NODE &&
-        (forceContext === true || forceContext(node)) 
-      ) {
+      if ( node.nodeType === Node.ELEMENT_NODE && (forceContext === true || forceContext(node)) ) 
+      {
         txt[++i] = innerText;
         txt[++i] = '';
+
       } else {
+
         if (typeof innerText[0] === 'string') {
           txt[i] += innerText.shift();
         }
+
         if (innerText.length) {
           txt[++i] = innerText;
           txt[++i] = '';
         }
+
       }
     } while (node = node.nextSibling);
+
     return txt;
   }
- ```
+}
 
- 相信这一步对于大家来说应该并不难。无非就是递归遍历节点的类型。我们来看看最后得到的是什么样的数据
+```  
+
+ ok, 第一阶段已经完成, 我们来看一下运行后的成果。emmm, 很棒, 文本节点已经全部分离出来了。接下来我们需要对这些数据进行正则匹配。
 
  ```js
-0: "↵"
-1: ["Thistext↵", ["123"], "↵"]  
-2: ""
-3: ["is This"]
-4: "↵↵"
+  [
+     "↵",
+      [
+        "Thistext↵	",
+        ["123"],
+        "↵	",
+        ["is This"],
+        "↵	"
+      ]
+     "↵"
+  ]
  ```
 
- ### 将遍历得到的文本节点进行正则匹配校验
+
+ <!-- ### 将遍历得到的文本节点进行正则匹配校验
 
  ```js
   function matchAggregation(textAggregation) {
@@ -310,5 +390,5 @@ element.innerHTML = element.innerHTML.replace(/\bandy\w*\b/gi,'summer');
 ```
 
   我们匹配的字符串是```This```, 那么如何处理``` Th<a><is/a> ``` 这类的跨节点文本呢？ 目前由于本人水平限制, 暂时没有想到好的处理方案,如果你有好的idea欢迎
-  [issue](https://github.com/Summer-andy/chrome-extensions-searchReplace/issues)。我们继续讨论正常的文本节点, 
+  [issue](https://github.com/Summer-andy/chrome-extensions-searchReplace/issues)。我们继续讨论正常的文本节点,  -->
 
