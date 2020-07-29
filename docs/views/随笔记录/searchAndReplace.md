@@ -137,7 +137,7 @@ element.innerHTML = element.innerHTML.replace(/\bandy\w*\b/gi,'summer');
         -> TEXT NODE (data: "\n i am andy \n")   
   ```
 
-  ### 2.遍历DOM,标记出匹配文本节点
+  ### 2.遍历文本节点,标记出匹配文本节点
 
   ```js
       {
@@ -303,92 +303,186 @@ const block =  {
   ]
  ```
 
+ ## 遍历文本节点,标记出匹配文本节点
 
- <!-- ### 将遍历得到的文本节点进行正则匹配校验
+### 定义正则表达式
 
- ```js
-  function matchAggregation(textAggregation) {
-    for (var i = 0, l = textAggregation.length; i < l; ++i) {
+   比如我们匹配节点中this.
+  
+  ```js
+  var regex = RegExp("this", 'gi');
+  ```
 
-      var text = textAggregation[i];
+### 记录匹配节点在文本中的位置
 
-      if (typeof text !== 'string') {
-        matchAggregation(text);
-        continue;
-      }
+  ```js
 
-      if (regex.global) {
-        while (match = regex.exec(text)) {
-          matches.push(self.prepMatch(match, matchIndex++, offset));
-        }
-      } else {
-        if (match = text.match(regex)) {
-          matches.push(self.prepMatch(match, 0, offset));
-        }
-      }
+  var matches = []; // 保存匹配结果
+  var match;  // 临时匹配结果变量
+  var offset = 0; // 记录文本偏移量
+  var matchIndex = 0; // 匹配索引
+  var regex = RegExp("this", 'gi');
 
-      offset += text.length;
-    }
-  }
+function matchAggregation(textAggregation) {
+	for (var i = 0, l = textAggregation.length; i < l; ++i) {
+		var text = textAggregation[i];
+		if (typeof text !== 'string') {
+			matchAggregation(text);
+			continue;
+		}
+		if (regex.global) {
+			while (match = regex.exec(text)) {
+				matches.push(prepMatch(match, matchIndex++, offset));
+			}
+		} else {
+			if (match = text.match(regex)) {
+				matches.push(prepMatch(match, 0, offset));
+			}
+		}
+		offset += text.length;
+	}
+}
 
-	function prepMatch(match, matchIndex, characterOffset) {
 
+function prepMatch(match, matchIndex, characterOffset) {
     if (!match[0]) {
       throw new Error('findAndReplaceDOMText cannot handle zero-length matches');
     }
-
     match.endIndex = characterOffset + match.index + match[0].length;
     match.startIndex = characterOffset + match.index;
     match.index = matchIndex;
-
     return match;
-  }
+}
+  ```
 
- ```
+  经过一轮过滤之后, 我们应该能够得到两组数据。数组中的```startIndex```和 ``` endIndex ``` 代表着匹配值在文本中的起始位置
+  和结束位置。``` index ``` 表示第几项。
 
- 这一步的目的是为了遍历文本节点获取在目标文本中所处的位置(主要是开始和结束的索引).比如我们匹配this这个单词。那么这个匹配结果就是
+```js
+[
+  [ 0: "This" , endIndex: 6, index: 0, input: "Thistext↵	", startIndex: 2 ],
+  [ 0: "This", endIndex: 24, index: 1, input: "is This", startIndex: 20 ]
+]
 
- ```js
-
- [
-   [
-     0: "This"
-    endIndex: 5
-    groups: undefined
-    index: 0
-    input: "Thistext↵"
-    startIndex: 1
-   ],
-   [
-     0: "This"
-    endIndex: 21
-    groups: undefined
-    index: 1
-    input: "is This"
-    startIndex: 17
-   ]
- ]
-
- ```
-
- ### 将经过正则匹配后的结果与实际文本节点结合
-
-  此时我们会遇到两个问题, 跨节点的文本我们应该如何处理。
-
-  举个例子(为了看着舒服点, 我将DOM层级展开), 
-
-```html
-<div id="container">
-<h3>
-  Th
-  <a>is</a>
-  text
-  <button>123</button>
-  <h4>is This</h4>
-</h3>
-</div>
 ```
 
-  我们匹配的字符串是```This```, 那么如何处理``` Th<a><is/a> ``` 这类的跨节点文本呢？ 目前由于本人水平限制, 暂时没有想到好的处理方案,如果你有好的idea欢迎
-  [issue](https://github.com/Summer-andy/chrome-extensions-searchReplace/issues)。我们继续讨论正常的文本节点,  -->
+### 遍历容器下的节点树, 记录 每次匹配的 startPortion 和 endPortion
+  
+   可能有的人会有疑问, 为什么要弄两个对象来存储匹配结果。
 
+   当我们匹配 ``` <p> summer </p> ``` 中 summer文本节点的时候 startPortion 和 endPortion 的节点都是指向
+   ``` summer ```文本节点。但是遇到 ``` <p>summ<a>er</a></p> ``` 这种情况的时候, startPortion 和 endPortion指向的节点就不一样了。因此我们可以根据
+   它们的指向来做不同的处理。
+
+   在遍历之前, 我们了解一下关于nodeType的小知识: 
+
+  :::tip
+   每个节点都有一个 nodeType 属性，用于表明节点的类型，节点类型由 Node 类型中定义12个常量表示
+  :::
+
+   | 常量名 | 常量值 | 节点类型 | 描述 |
+   | :-----| ----: | :----: | :----: | 
+   | Node.ELEMENT_NODE | 1 | Element | 代表元素 |
+   | Node.ATTRIBUTE_NODE | 2 | Attr | 代表属性 | 
+   | Node.TEXT_NODE | 3 | Text | 代表元素或属性中的文本内容 |
+   | Node.COMMENT_NODE | 8 | Comment | 代表注释 | 
+   | Node.DOCUMENT_NODE | 9 | Document | 代表整个文档（DOM 树的根节点 | 
+   | ... | ... | ... |  ... |
+
+   我们就根据nodeType对整颗DOM树进行遍历, 由于篇幅原因详细代码就不贴出来了, 有兴趣的可以上我的[https://github.com/Summer-andy/chrome-extensions-searchReplace](https://github.com/Summer-andy/chrome-extensions-searchReplace)上查看。
+
+   ```js
+    if(curNode.nodeType === Node.TEXT_NODE) {
+        // 生成startPortion 和  endPortion
+        // ...
+      endPortion = {
+          node: curNode,
+          index: portionIndex++,
+          text: curNode.data.substring(match.startIndex - atIndex, match.endIndex - atIndex),
+          indexInMatch: atIndex === 0 ? 0 : atIndex - match.startIndex,
+          indexInNode: match.startIndex - atIndex,
+          endIndexInNode: match.endIndex - atIndex,
+          isEnd: true
+      };
+        // ...
+        startPortion = {
+          node: curNode,
+          index: portionIndex++,
+          indexInMatch: 0,
+          indexInNode: match.startIndex - atIndex,
+          endIndexInNode: match.endIndex - atIndex,
+          text: curNode.data.substring(match.startIndex - atIndex, match.endIndex - atIndex)
+        };
+    }
+   ```
+
+   如果说 ``` endPortion.node === startPortion.node ```, 那么可以结合之前match的匹配值, 获取到node节点。此时我们可以把替换部分
+   暴露出去, 供开发者可以自定义替换效果。类似于:
+
+  ```js
+    replace: function(portion, match) {
+        called = true;
+        var el = document.createElement('em');
+        el.innerHTML = portion.text;
+        return el;
+    },
+  ```
+
+   el就是我们新生成的节点。那我们此时我们应该怎么塞到DOM树上呢？
+
+
+ ## 根据文本节点获取父元素, 并且追加一个新的元素  
+
+   我们将自定义替换部分抽成一个函数getPortionReplacementNode.此时我们可以获取到替换后的新节点。
+   比如我们将```summ``` 改成 ``` <em>###</em> ```
+
+   ```js
+		var newNode = this.getPortionReplacementNode(
+        endPortion,
+        match
+      );
+   ```
+
+  获取到新节点后, 在之前DOM树上的匹配节点的前面插入新的节点, 比如我们插入的节点是 ``` <em>###</em>  ```
+
+  ```js
+	node.parentNode.insertBefore(newNode, node);
+  ```
+
+  那么此时现在的DOM树应该是
+
+  ```html
+    <p>summer</p>
+  ```
+
+  -> 
+
+  ```html
+    <p><em>###</em>summer</p>
+  ```
+
+  ## 删除匹配文本节点
+
+  ```js
+    node.parentNode.removeChild(node);
+  ```
+
+  那么到了这一步, 我们的替换工作也完成了。
+
+  ```html
+    <p><em>###</em>er</p>
+  ```
+
+## 个人总结
+
+  其实我一开始也打算直接replace就完事儿了, 不管DOM事件绑定什么的。可是, 我觉得开源是一件伟大又很严肃的事情, 我们开源某个软件, 一定是为了解决
+  生活、学习中的某个问题, 当我看到评论上说 ``` Search and Replace ``` 替换文本后无法点击按钮,超链接之类的话后。 我又开始重新审视这件事情, 我认为要是我能解决这个
+  问题, 这肯定是一件有意义的事情。其实一开始我走了很多弯路, 可能是因为自己水平不够,没有想到在文本节点上能做这么大的文章。
+
+
+## 参考文献
+
+ - [replacing-text-in-the-dom-its-not-that-simple](http://james.padolsey.com/javascript/replacing-text-in-the-dom-its-not-that-simple)
+ - [replacing-text-in-the-dom-solved](https://j11y.io/javascript/replacing-text-in-the-dom-solved)
+ - [findAndReplaceDOMText](https://github.com/padolsey/findAndReplaceDOMText)
+ - [HTML DOM nodeType](https://www.w3school.com.cn/jsref/prop_node_nodetype.asp)
