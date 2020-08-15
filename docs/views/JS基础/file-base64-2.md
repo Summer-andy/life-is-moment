@@ -2,9 +2,9 @@
 title: 基于Base64的探索与实践
 date: 2020-04-20
 tags:
-  - React基础
+  - js基础
 categories:
-  - React
+  - 前端基础
 ---
 
 ## 前言

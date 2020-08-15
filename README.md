@@ -9,33 +9,40 @@
                                                   \ \,-"    _.-"
                                                   \(   _.-"
                                                     `--"
-### Introduction
-###### Life is moment. The more you know, the more you don't know.
-#### LeetCode篇
+
+### Life is moment. The more you know, the more you don't know.
 
 #### 基础语法篇
-* [你不知道的Error](./docs/guide/js/Error.md)
-* [this的透彻理解](./docs/guide/js/This.md)
-* [js类型的窥探](./docs/guide/js/Type.md)
-* [js原型的窥探](./docs/guide/js/Prototype.md)
-* [这一次我真的搞懂了Babel](./docs/guide/js/Babel.md)
+* [你不知道的Error](./docs/views/JS基础/Error.md)
+* [你不知道的js之你不知道的this](./docs/views/JS基础/This.md)
+* [这一次我真的搞懂了Babel](./docs/views/JS基础/Babel.md)
+* [es系列学习](./docs/views/JS基础/es系列.md)
+* [小朋友你对于Base64是不是有很多问号](./docs/views/JS基础/file-base64.md)
+* [基于Base64的探索与实践](./docs/views/JS基础/file-base64-2.md)
+* [reduce常用功能汇总](./docs/views/JS基础/reduce.md)
+
+
+
 #### 样式学习篇
-* [css常用选择](./docs/guide/css/选择器.md)
+* [css常用选择](./docs/views/css样式/选择器.md)
+
 #### React学习篇
-* [hooksd API的学习](./docs/guide/react/hooks.md)
-* [HOC的学习](./docs/guide/react/hoc.md)
-* [createElement的阅读](./docs/guide/react/createElement.md)
-* [suspense的阅读](./docs/guide/react/suspense.md)
-* [Children的阅读](./docs/guide/react/reactChildren.md)
-* [ReactDOM.render()的阅读](./docs/guide/react/ReactDom.render.md)
-#### 番外篇
-* [从零部署https](./docs/guide/others/serviceHttps.md)
-* [搭建私服](./docs/guide/others/verdaccio.md)
-* [规范化commit](./docs/guide/others/commitizen.md)
-* [ios发布教程](./docs/guide/others/applePublish.md)
-* [glob的使用](./docs/guide/others/node-file.md)
-* [使用workflow完成打包部署一条龙的服务](./docs/guide/others/gitActions.md)
-* [一些小工具](./docs/guide/others/someTools.md)
+* [Hook的基本使用](./docs/views/React篇/hooks.md)
+* [HOC的学习](./docs/views/React篇/hoc.md)
+* [React Hooks - 重新认识useEffect](./docs/views/React篇/HooksBestPractices.md)
+* [深度理解Hook规则](./docs/views/React篇/hooksRule.md)
+* [常用的自定Hooks](./docs/views/React篇/extraHooks.md)
+
+
+#### 随笔记录
+
+* [从零部署前端项目(https)](./docs/views/随笔记录/serviceHttps.md)
+* [使用workflow完成打包部署项目](./docs/views/随笔记录/gitActions.md)
+* [使用verdaccio搭建私服](./docs/views/随笔记录/verdaccio.md)
+* [替换文本,恐怕没那么简单](./docs/views/随笔记录/searchAndReplace.md)
+* [一些常用小工具](./docs/views/随笔记录/someTools.md)
+* [基于Antd表格的思考](./docs/views/随笔记录/antd-table.md)
+
 #### 年度总结篇
-* [2018](./docs/guide/review/2018.md)
+
 * [2019](./docs/guide/review/2019.md)

@@ -2,9 +2,9 @@
 title: 小朋友你对于Base64是不是有很多问号？？？
 date: 2020-04-12
 tags:
-  - React基础
+  - js基础
 categories:
-  - React
+  - 前端基础
 ---
 
 ## 前言: 
