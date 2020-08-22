@@ -209,7 +209,7 @@ categories:
 
   ### 重构ToyReact.js
 
-  为了保持与React API的风格一致, 我们需要改变一下main.js的代码
+  为了保持与React API的风格一致, 我们需要改变main.js的代码
 
   ```js
   import { ToyReact } from './ToyReact';
@@ -303,3 +303,115 @@ categories:
   },
 
   ```
+  #### 新增Component类
+
+  这里有的同学可能会有疑问, 为什么需要新增一个额外的类。
+
+  当babel解析到``` TestComponent ```的时候, 我们直接实例化它, 并且给实例化后的值 ``` setAttribute ```属性以及```  appendChild ``` 子节点。 我们当然不能在main.js中写这些方法的具体实现。因此我们让TestComponent去```继承``` Component, 让Component类去实现这两个方法。
+
+  ```js
+  export class Component {
+    constructor(props) {
+      this.props = Object.create(null);
+      this._root = null;
+      this.children = []
+    }
+
+    setAttribute(name, value) {
+        this.props[name] = value; 
+    }
+
+    appendChild(component) {
+      this.children.push(component);
+    }
+
+    get root() {
+      if(!this._root) {
+        this._root = this.render().root;
+      }
+      return this._root
+    }
+  }
+  ```
+
+  #### 新增render方法
+
+  ```js
+  render(component, parentElement) {
+      parentElement.appendChild(component.root)
+  }
+  ```
+  
+  #### 修改main.js代码
+
+  相较于之前, 我们让TestComponent去继承了Component类, 从而使得``` TestComponent ``` 拥有获取props和添加子节点的能力。
+
+  ```js
+  import { ToyReact, Component } from './ToyReact';
+
+  class TestComponent extends Component  {
+    render() {
+      return <div id="hello">hello world!</div>
+    }
+  }
+
+  ToyReact.render(<TestComponent name="123" />, document.body)
+  ```
+
+  我们发现页面上已经能够正常显示我们编写的``` hello world! ```了。我们试着往``` TestComponent ```添加children。
+
+  ```js
+  import { ToyReact, Component } from './ToyReact';
+
+  class TestComponent extends Component  {
+    render() {
+      return <div id="hello">hello world!{this.children}</div>
+    }
+  }
+
+  ToyReact.render(
+    <TestComponent name="123">
+      <div>i</div>
+      <div>am</div>
+    </TestComponent>, 
+  document.body)
+  ```
+
+  我们再次运行代码, 发现页面报错了。其实我们很容易能够猜到为什么？我们尝试打印``` this.children ```的值,
+  this.children 是一个数组,里面包含了两个元素。然而我们之前的代码没有考虑过这种情况, 因此我们需要修改createElement方法, 让他能够把children里面的数组给解析出来。
+
+  ```js
+  createElement(type, attributes, ...children) {
+    let element;
+    if(typeof type === 'string') {
+       element = new ElementWrapper(type);
+    } else {
+      element = new type;
+    }
+
+    
+    for (let name in attributes) {
+      element.setAttribute(name, attributes[name])
+    }
+
+    function insertChildren(children) {
+      for (let child of children) {
+        if(typeof child === 'string') {
+          child = new TextNodeWrapper(child)
+        }
+        if(typeof child === 'object' && child instanceof Array) {
+          insertChildren(child);
+          return;
+        }
+        element.appendChild(child)
+      }
+    }
+
+    insertChildren(children);
+    
+    return element;
+  },
+  ```
+
+  我们通过一个简单的递归函数去处理child是数组的情况。现在我们的页面可以正常的显示DOM结构, 并且拥有props的能力。
+  下一步我们需要让页面能够```动起来```， 也就是我们能够使用类似React中的this.setState()方法去改变页面的显示。
