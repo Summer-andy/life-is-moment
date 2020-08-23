@@ -7,6 +7,11 @@ categories:
   - React
 ---
 
+## 前言
+
+   本篇文章适合使用React一年左右的小伙伴阅读。文章的主体内容是对winter老师公开课的复盘, 里面涉及到知识点与React源码无关, 因此大家可以放轻松阅读。
+   我希望本篇文章可以作为大家开启阅读React源码大门的钥匙。
+
 ## 搭建环境
   
   - 配置webpack.config.js
@@ -415,3 +420,266 @@ categories:
 
   我们通过一个简单的递归函数去处理child是数组的情况。现在我们的页面可以正常的显示DOM结构, 并且拥有props的能力。
   下一步我们需要让页面能够```动起来```， 也就是我们能够使用类似React中的this.setState()方法去改变页面的显示。
+
+  ## 让ToyReact能够“动起来”
+
+  在让它动起来前, 我们先来了解一下一个不太常用的api ``` range ```.
+
+  ### range的定义
+
+  MDN是这样定义它的: ``` Range 接口表示一个包含节点与文本节点的一部分的文档片段 ```.我认为在此基础上,稍稍修改一下会更好理解。
+  ``` Range 接口能够表示文档中任意节点之间的一部分文档(HTML DOM)片段。```。
+
+  ### range API的简单使用
+
+  ```js
+    <p id="p1"> hello<span> world !</span><span> world !</span></p>
+  ```
+
+  -  Range.setStart(startNode, startOffset) 设置Range的起点
+
+      接收二个参数第一个参数是节点, 第二个参数是节点的偏移量。比如拿上面的例子来说:
+
+      ```js
+      const p1 = document.getElementById('p1');
+      range.setStart(p1, 1)
+      ```
+
+      range的起始位置应该是
+      
+      ```js
+                        range起始位置
+                          |
+                          |
+                          |  
+          <p id="p1">hello <span> world !</span><span> world !</span></p>
+      ```
+      那么如果``` setStart ```的第二个参数是0,那么range的起始位置则是:
+
+      ```js
+                range起始位置
+                  |
+                  |
+                  |  
+       <p id="p1">hello <span> world !</span><span> world !</span></p>
+      ```
+      
+      其实很容易理解，p1元素节点下面有三个子节点。一个是文本节点hello, 另外两个则是元素节点 ```<span> world !</span>```。
+
+  -  Range.setEnd(startNode, startOffset) 设置Range的结束位置。
+
+     接收二个参数第一个参数是节点, 第二个参数是节点的偏移量。我们还是拿上面的例子来说:
+
+      ```js
+      const p1 = document.getElementById('p1');
+      range.setEnd(p1, p1.childNodes.length)
+      ```
+
+      ```js
+                                                              range结束位置
+                                                                |
+                                                                |
+                                                                |  
+       <p id="p1">hello <span> world !</span><span> world !</span> </p>
+      ```
+
+  -  Range.insertNode(Node) 在Range的起始位置插入节点。
+
+     ```html
+      <p id="p1"> hello<span> world !</span><span> world !</span><span> world!</span></p>
+     ```
+
+     ```js
+      const range = document.createRange();
+      const p1 = document.getElementById('p1');
+      const element = document.createElement('p');
+      element.appendChild(document.createTextNode('123'));
+      range.setStart(p1, 0);
+      range.setEnd(p1, p1.childNodes.length);
+      range.insertNode(element)
+     ```
+
+     当执行完``` insertNode ``` 方法后,会在文本节点hello前面添加一个p元素节点。
+
+  -  Range.deleteContents() 移除来自 Document的Range 内容。
+
+     调用此方法会删除range内的所有节点。
+
+     ```html
+      <p id="p1"> hello<span> world !</span><span> world !</span><span> world!</span></p>
+     ```
+
+     ```js
+      const range = document.createRange();
+      const p1 = document.getElementById('p1');
+      range.setStart(p1, 0)
+      range.setEnd(p1, p1.childNodes.length)
+      range.deleteContents()
+     ```
+
+     以上代码执行后p1节点下面的所有节点都将被删除。
+
+  ::: warning
+  range的其他api本篇文章中不会涉及,因此就不一一介绍了。
+  :::
+
+  ### 使用range重构ToyReact
+
+  我们为什么要用range去重构之前的代码呢？我认为主要是出于以下的考虑:
+
+  - 使用range我们可以在任意节点处插入DOM
+  - 为接下来的重新渲染与虚拟DOM的比对做铺垫
+
+  
+我们修改的基本思路是: 
+
+  - 从渲染DOM的地方开始着手, 使用range去完成DOM的实际操作
+  - 仔细阅读之前的代码, 你会发现它无法进行重新渲染。因此我们需要定义一个私有的方法能够让DOM树重新render。
+
+  为了让渲染DOM树的方法, 变得不那么容易让外部调用, 我们使用```Symbol``` 返回的唯一标识符作为函数名。
+
+  ```js
+    const RENDER_TO_DOM = Symbol('render to dom')
+  ```
+
+  #### 修改Component类
+
+  我们需要在Component类中添加一个私有的方法, 因为this.render()返回的值有可能是一个Component, ElementWrapper, TextNodeWrapper。因此在其余二个类中, 我们
+  也需要去添加``` RENDER_TO_DOM ``` 方法。
+
+  ```js
+    [RENDER_TO_DOM](range) {
+      this.render()[RENDER_TO_DOM](range);
+    }
+  ```
+
+  #### 修改ElementWrapper和TextNodeWrapper类
+
+  在这二个类中, 我们是将实DOM渲染到页面。因此在``` RENDER_TO_DOM ``` 中我们需要往range中插入节点。
+
+  ```js
+    [RENDER_TO_DOM](range) {
+      range.deleteContents();
+      range.insertNode(this.root);
+    }
+  ```
+
+  #### 修改render函数
+
+   由于我们不再使用```get root()``` 方法来获取实DOM, 因此我们通过调用 ``` RENDER_TO_DOM ``` 来插入节点。
+
+   ```js
+     render(component, parentElement) {
+      const range = document.createRange();
+      range.setStart(parentElement, 0);
+      range.setEnd(parentElement, parentElement.childNodes.length);
+      range.deleteContents();
+      component[RENDER_TO_DOM](range)
+    }
+   ```
+
+  我们已经初步完成了重构,距离页面动起来还有点距离, 但是此时页面正常显示没问题。如果代码跑不起来的可以查看 [feautre/range分支的代码](https://github.com/Summer-andy/Toy-React/tree/feautre/range).
+  review代码看看哪儿出错了。
+
+  #### 修改main.js
+
+  我们需要有一个主动的行为去更新页面。 我们在页面添加一个计数器, 每点击一次按钮, 页面上的数字加一.
+
+  ```js
+  import { ToyReact, Component } from './ToyReact';
+
+  class TestComponent extends Component {
+    constructor() {
+      super();
+      this.state = {
+        count: 1
+      }
+    }
+    render() {
+      return <div id="hello">
+        hello world!
+        <span>{
+            this.state.count.toString()
+          }
+          <button onClick={() => this.count ++ }>点击</button>
+          </span>
+          {
+            this.children
+          }
+        </div>
+    }
+  }
+
+  ToyReact.render(<TestComponent></TestComponent>, document.body)
+  ```
+
+  #### 支持事件的绑定以及新增重新渲染函数
+
+  我们点击onClick页面似乎没有反应。其实这边有二个很重要的点没有处理: 
+
+  - 我们需要处理``` onClick ``` 事件函数
+  - 我们需要新增将改变后count的值重新渲染到页面
+
+  首先只有元素节点上才能绑定事件, 因此我们肯定是在``` ElementWrapper ```类中进行修改。我们写一个简单的正则来匹配所有on开头的事件, 比如onClick, onHover, onMouseUp.....。
+
+  ```js
+  setAttribute(name, value) {
+    if(name.match(/^on([\s\S]+)/)) {
+      this.root.addEventListener(RegExp.$1.replace(/^[\s\S]/, s => s.toLowerCase()), value)
+    }
+    this.root.setAttribute(name, value)
+  }
+  ```
+
+  接下来就是思考如何编写一个重新渲染的方法了, 当我们点击按钮的时候, count的值其实已经改变了。只是内容没有改变, 那么如果要做到count实时更新，我们就需要每次都去更新range的内容。
+  我们在Component类中新增一个``` rerender ```方法进行更新操作。
+
+  ```js
+  constructor(props) {
+    ...
+    this._range = null;
+  }
+
+  [RENDER_TO_DOM](range) {
+      this._range = range;
+      this.render()[RENDER_TO_DOM](range);
+  }
+
+  rerender() {
+    this._range.deleteContents();
+    this[RENDER_TO_DOM](this._range) 
+  }
+  ```
+
+  实现的过程很简单, 其实就是将range的内容全部删除, 然后重新执行添加Node的方法。
+
+  我们在```main.js```中的按钮点击事件修改为 ```  <button onClick={() => { this.state.count ++; this.rerender()} }>点击</button> ```。至此, 页面已经能够动起来了。但是为了
+  与React的API保持一致, 我们需要将 ``` this.state.count ++; this.rerender() ``` 合并为 ``` this.setState({ count: count++ }) ```。
+
+   #### 新增setState方法
+
+  setState方法主要是将新的state与老的state比较, 然后进行一个深拷贝的操作。
+  
+   ```js
+    setState(newState) {
+      if(this.state === null && typeof this.state !== 'object') {
+        this.state = newState;
+        this.rerender();
+        return;
+      }
+
+      let merge = (oldState, newState) => {
+          for (const key in newState) {
+            if(oldState[key] === null || typeof oldState[key] !== 'object') {
+              oldState[key] = newState[key]
+            } else {
+              merge(oldState[key], newState[key]);
+            }
+          }
+      }
+      merge(this.state, newState);
+      this.rerender();
+    }
+   ```
+
+   
