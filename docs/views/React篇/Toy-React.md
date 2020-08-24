@@ -69,7 +69,7 @@ categories:
 
   ### 编写一段jsx
 
-  我们在main.js中编写一段jsx语法, 然后在控制台查看```main.js```经过编译后的结果。
+  我们在main.js中编写一段jsx, 然后在控制台查看```main.js```经过编译后的结果。
 
   ```js
   let a = <div id="hello">hello world!</div>
@@ -142,6 +142,7 @@ categories:
       }
     }
    ```
+   ok! 至此我们的环境搭建已经完成, 接下来可以愉快的开发啦!
 
  ## 编写ToyReact
 
@@ -234,7 +235,7 @@ categories:
 
     #### 修改createElement
 
-    首先我们需要判断一下``` type ```的类型, 因为传进来的type不再是之前的元素标签(比如div)字符串了。而是变成了``` function ```.其次呢, 我们最好将元素、文本节点剥离开来。元素是可以被添加属性以及子节点的, 而在文本节点上我们不能做任何事情。剥离开来的目的是为了让```createElement```方法变得不那么臃肿, 同时将元素和文本抽离出来, 各自的逻辑，维护起来也更加方便。
+    首先我们需要判断一下``` type ```的类型, 因为传进来的type不再是之前的元素标签(比如div)字符串了。而是变成了``` function ```.其次呢, 我们最好将元素、文本节点剥离开来。元素节点是可以被添加属性以及子节点的, 而在文本节点上我们不能做任何事情。剥离开来的目的是为了让```createElement```方法变得不那么臃肿, 同时将元素和文本抽离出来, 各自的逻辑，维护起来也更加方便。
 
       <iframe
       src="https://carbon.now.sh/embed?bg=rgba(171%2C%20184%2C%20195%2C%201)&t=one-dark&wt=sharp&l=auto&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=0px&ph=0px&ln=false&fl=1&fm=Hack&fs=14px&lh=133%25&si=false&es=2x&wm=false&code=export%2520const%2520ToyReact%2520%253D%2520%257B%250A%2520%2520createElement(type%252C%2520attributes%252C%2520...children)%2520%257B%250A%2520%2520%2520%2520%250A%2520%2520%2520%2520const%2520element%2520%253D%2520document.createElement(type)%253B%250A%2520%2520%2520%2520%250A%2520%2520%2520%2520for%2520(let%2520name%2520in%2520attributes)%2520%257B%250A%2520%2520%2520%2520%2520%2520element.setAttribute(name%252C%2520attributes%255Bname%255D)%250A%2520%2520%2520%2520%257D%250A%2520%2520%2520%2520%250A%250A%2520%2520%2520%2509for%2520(let%2520child%2520of%2520children)%2520%257B%250A%2520%2520%2520%2520%2520%2520const%2520node%2520%253D%2520document.createTextNode(child)%250A%2520%2520%2520%2520%2520%2520element.appendChild(node)%250A%2520%2520%2520%2520%257D%250A%2520%2520%2520%2520%250A%2520%2520%2520%2520return%2520element%253B%250A%2520%2520%257D%250A%257D"
@@ -432,7 +433,7 @@ categories:
 
   ### range API的简单使用
 
-  ```js
+  ```html
     <p id="p1"> hello<span> world !</span><span> world !</span></p>
   ```
 
@@ -527,8 +528,8 @@ categories:
 
   我们为什么要用range去重构之前的代码呢？我认为主要是出于以下的考虑:
 
-  - 使用range我们可以在任意节点处插入DOM
-  - 为接下来的重新渲染与虚拟DOM的比对做铺垫
+  - 1.使用range我们可以在任意节点处插入DOM
+  - 2.为接下来的重新渲染与虚拟DOM的比对做铺垫
 
   
 我们修改的基本思路是: 
@@ -555,7 +556,7 @@ categories:
 
   #### 修改ElementWrapper和TextNodeWrapper类
 
-  在这二个类中, 我们是将实DOM渲染到页面。因此在``` RENDER_TO_DOM ``` 中我们需要往range中插入节点。
+  在这二个类中, 我们将实DOM渲染到页面。因此在``` RENDER_TO_DOM ``` 中我们需要往range中插入节点。
 
   ```js
     [RENDER_TO_DOM](range) {
@@ -618,7 +619,7 @@ categories:
   我们点击onClick页面似乎没有反应。其实这边有二个很重要的点没有处理: 
 
   - 我们需要处理``` onClick ``` 事件函数
-  - 我们需要新增将改变后count的值重新渲染到页面
+  - 我们需要将改变后count的值重新渲染到页面上
 
   首先只有元素节点上才能绑定事件, 因此我们肯定是在``` ElementWrapper ```类中进行修改。我们写一个简单的正则来匹配所有on开头的事件, 比如onClick, onHover, onMouseUp.....。
 
@@ -651,14 +652,15 @@ categories:
   }
   ```
 
-  实现的过程很简单, 其实就是将range的内容全部删除, 然后重新执行添加Node的方法。
+  实现的过程很简单, 其实就是将range的内容全部删除(不删除的话之前的内容将会保留), 然后重新执行添加Node的方法。
 
   我们在```main.js```中的按钮点击事件修改为 ```  <button onClick={() => { this.state.count ++; this.rerender()} }>点击</button> ```。至此, 页面已经能够动起来了。但是为了
   与React的API保持一致, 我们需要将 ``` this.state.count ++; this.rerender() ``` 合并为 ``` this.setState({ count: count++ }) ```。
 
    #### 新增setState方法
 
-  setState方法主要是将新的state与老的state比较, 然后进行一个深拷贝的操作。
+  setState方法主要是将新的state与老的state比较, 然后进行一个深拷贝的操作。如果this.state不存在或者类型不是对象的时候, 我们直接使用新的state去替换它。
+  然后通过递归将新的state中的值直接赋值到旧的对应的state值。
   
    ```js
     setState(newState) {
@@ -682,4 +684,381 @@ categories:
     }
    ```
 
-   
+   #### 集成React官网示例Tic Tac Toe
+
+  为了让ToyReact更加健壮, 我们将React官网的例子作为ToyReact的Demo, 顺便对ToyReact进行一些小修小补。
+
+  - 修改main.js
+
+  我们需要将官网中函数式写法修改为类写法, 因为ToyReact暂时不能处理传入函数式的组件。
+
+  ```js
+  import { ToyReact, Component } from './ToyReact';
+
+  class Square extends Component {
+    render() {
+      return (
+        <button className="square" onClick={this.props.onClick}>
+          {this.props.value}
+        </button>
+      );
+    }
+  }
+
+  class Board extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        squares: Array(9).fill(null),
+      };
+    }
+
+    handleClick(i) {
+      const squares = this.state.squares.slice();
+      squares[i] = 'X';
+      this.setState({ squares: squares });
+    }
+
+    renderSquare(i) {
+      return (
+        <Square
+          value={this.state.squares[i]}
+          onClick={() => this.handleClick(i)}
+        />
+      );
+    }
+
+    render() {
+      const status = 'Next player: X';
+
+      return (
+        <div>
+          <div className="status">{status}</div>
+          <div className="board-row">
+            {this.renderSquare(0)}
+            {this.renderSquare(1)}
+            {this.renderSquare(2)}
+          </div>
+          <div className="board-row">
+            {this.renderSquare(3)}
+            {this.renderSquare(4)}
+            {this.renderSquare(5)}
+          </div>
+          <div className="board-row">
+            {this.renderSquare(6)}
+            {this.renderSquare(7)}
+            {this.renderSquare(8)}
+          </div>
+        </div>
+      );
+    }
+  }
+
+  class Game extends Component {
+    render() {
+      return (
+        <div className="game">
+          <div className="game-board">
+            <Board />
+          </div>
+          <div className="game-info">
+          </div>
+        </div>
+      );
+    }
+  }
+
+
+  ToyReact.render(
+    <Game />,
+    document.getElementById('root')
+  );
+  ```
+
+  - 修改main.html
+
+  我们将官网的样式与根节点root引入。
+
+  ```html
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+    </head>
+    <style>
+
+    body {
+      font: 14px "Century Gothic", Futura, sans-serif;
+      margin: 20px;
+    }
+
+    ol, ul {
+      padding-left: 30px;
+    }
+
+    .board-row:after {
+      clear: both;
+      content: "";
+      display: table;
+    }
+
+    .status {
+      margin-bottom: 10px;
+    }
+
+    .square {
+      background: #fff;
+      border: 1px solid #999;
+      float: left;
+      font-size: 24px;
+      font-weight: bold;
+      line-height: 34px;
+      height: 34px;
+      margin-right: -1px;
+      margin-top: -1px;
+      padding: 0;
+      text-align: center;
+      width: 34px;
+    }
+
+    .square:focus {
+      outline: none;
+    }
+
+    .kbd-navigation .square:focus {
+      background: #ddd;
+    }
+
+    .game {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .game-info {
+      margin-left: 20px;
+    }
+
+    </style>
+    <body>
+      <div id="root"></div>
+    </body>
+    <script src="dist/main.js" ></script>
+    <script >
+    </script>
+    </html>
+  ```
+
+  - 修改ElementWrapper类支持className
+
+    我需要单独处理```className```这个属性, 因为元素节点的类名是通过赋值到class上才能生效.
+
+    ```js
+    setAttribute(name, value) {
+      // ...
+      if(name === 'className') {
+        name = 'class'
+      }
+      // ...
+    }
+    ```
+
+    我们尝试打包, 查看页面渲染情况, 官网的例子在我们这儿也能够正常运行。
+    ![image](./img/tictoe.gif)
+
+  ## 让ToyReact拥有虚拟DOM与Diff算法
+
+  ### 什么是虚拟DOM
+
+   虚拟DOM本质上其实是对真实DOM的一种映射关系。它是一种以对象的形态来表示真实存在的DOM。举个例子:
+
+   ```html
+  <ul id="ul1">
+    <li name="1">world !</li>
+    <li name="2">world !</li>
+    <li name="3">world !</li>
+  </ul>
+   ```
+
+   上面的html代码如果以虚拟DOM的形态来表示的话, 那么就是:
+
+   ```js
+    {
+        type: 'ul',
+        props: {      
+          id: 'ul1'
+        },
+        children: [
+          { type: 'li', props: {name: '1'}, children: ['world !']},
+          { type: 'li', props: {name: '2'}, children: ['world !']},
+          { type: 'li', props: {name: '3'}, children: ['world !']},
+        ]
+    }
+   ```
+
+   ### 什么是Diff算法
+
+  Diff算法其实是通过比对新旧虚拟DOM树,然后将不同的部分渲染到页面中,从而达到最小化更新DOM的目的。
+
+  以下图DOM为例:
+
+  ![image](./img/diff1.png)
+
+  Diff算法采用按照深度遍历规则遍历的, 因此遍历的过程如下:
+  - 1. 对比节点1(没有变化)
+  - 2. 对比节点2(没有变化)
+  - 3. 对比节点4(没有变化)
+  - 4. 对比节点5```(节点5被移除, 记录一个删除的操作)```
+  - 5. 对比节点3(没有变化)
+  - 6. 对比节点3的children```(新增节点5, 记录一个新增操作)```
+
+  因此在实际渲染的过程中, 会执行节点5的删除和新增操作, 其余节点不会发生任何变化。
+
+  ### 再次重构ToyReact.js
+
+  在对虚拟DOM和Diff算法有所了解后, 我们又得重构ToyReact.js。这一路, 我们一直在重构ToyReact.js的路上。
+
+  重构之前我们对比一下官方的例子和我们的例子区别:
+
+  官网的例子:
+
+  ![image](./img/diff2.gif)
+
+  我们每次点击按钮, 它都只更新自个儿的节点。其他节点都不会重新渲染。我们来继续看一下ToyReact的渲染的过程。
+
+   ![image](./img/diff3.gif)
+
+  我们每次点击按钮, 整颗DOM树都重新渲染了, 这对于复杂页面的性能消耗将会非常巨大。因此我们迫切需要引入虚拟DOM+Diff算法来解决这个问题。
+
+  #### 定义虚拟DOM
+
+  对于元素节点来说, 虚拟DOM应该包含三样东西:
+  - 节点的类型(比如div, span, p)
+  - 节点上的props
+  - 节点的children
+
+  然而对于文本节点来说, 它的类型是固定的, 唯一不同的就是他的内容了, 因此它的虚拟DOM就比较简单了
+
+  - 节点的类型(text)
+  - 节点的内容(content)
+
+  那么对应到ToyReact中的代码片段应该是``` ElementWrapper ``` 和 ``` TextNodeWrapper ``` 这两个类。
+
+  ```js
+
+  class ElementWrapper {
+    // ...
+
+    get vdom() {
+      return {
+        type: this.type,
+        props: ？？？,
+        children: ？？？
+      }
+    }
+
+    // ...
+  }
+
+  ```
+
+  除了type属性我们可以通过构造函数中的参数获得, 其余的props和children我们都无法获得。但是呢这二个属性在Component类中都有, 因此我们可以让ElementWrapper类去继承Component类。、
+
+  ```js
+    class ElementWrapper {
+    // ...
+
+    get vdom() {
+      return {
+        type: this.type,
+        props: this.props,
+        children: this.children.map(item => item.vdom)
+      }
+    }
+
+    // ...
+  }
+  ```
+
+  同时我们还需要先注释掉``` ElementWrapper ```类中的 ``` setAttribute ``` 和 ``` appendChild ``` 方法。不然的话我们子节点的虚拟dom就塞不进去了, 因为ElementWrapper类中方法与Component类中方法重名了。
+
+
+
+
+  由于它是虚拟DOM, 因此它的children也应该是虚拟的children.因此在``` TextNodeWrapper ``` 类中, 也需要定义一个获取虚拟DOM的方法。
+
+  ```js
+  class TextNodeWrapper {
+    constructor(content) {
+      this.root = document.createTextNode(content);
+      this.content = content;
+    }
+
+  // ...
+    get vdom() {
+      return {
+        type: '#text',
+        content: this.content
+      }
+    }
+    // ...
+  }
+  ```
+
+  ok, 我最后需要在Component类中也定义个获取虚拟dom的方法, 通过递归的方法获取虚拟dom树。
+
+  ```js
+  export class Component {
+    // ...
+    get vdom() {
+      return this.render().vdom;
+    }
+    // ..
+  }
+  ```
+
+  #### 查看虚拟DOM
+
+   我们可以修改main.js中的代码来输出虚拟dom.
+
+   ``` js
+  let game = <Game />
+  console.log(game.vdom);
+   ```
+
+  ![image](./img/vdom.png)
+
+  ok! nice, 这就是我们想要的虚拟dom的结构。我们接下来先将注释掉的二个方法重新补上, 因为``` setAttribute ``` 和 ``` appendChild ```方法都是对实DOM的操作, 所以我打算把这两个
+  函数的实现全部放到 ``` RENDER_TO_DOM ```函数中。
+
+  ```js
+  [RENDER_TO_DOM](range) {
+    range.deleteContents();
+    let root = document.createElement(this.type);
+
+    for (const name in this.props) {
+      let value = this.props[name];
+      if (name.match(/^on([\s\S]+)/)) {
+        root.addEventListener(RegExp.$1.replace(/^[\s\S]/, s => s.toLowerCase()), value)
+      }
+      if (name === 'className') {
+        root.setAttribute('class', value)
+      } else {
+        root.setAttribute(name, value)
+      }
+    }
+
+    for (const child of this.children) {
+        const childRange = document.createRange();
+        childRange.setStart(root, root.childNodes.length);
+        childRange.setEnd(root, root.childNodes.length);
+        child[RENDER_TO_DOM](childRange);
+    }
+
+    range.insertNode(root);
+  }
+
+  ```
+
+  第一部分的for循环其实做的就是 ``` setAttribute ``` 的事情, 将属性赋值到元素上, 第二部分的for循环做的事情则是通过递归的方式插入child.
