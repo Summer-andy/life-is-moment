@@ -1,5 +1,5 @@
 ---
-title: 从0实现React框架(1)
+title: 从0实现React框架
 date: 2020-08-15
 tags:
   - React基础
@@ -10,7 +10,8 @@ categories:
 ## 前言
 
    本篇文章适合使用React一年左右的小伙伴阅读。文章的主体内容是对winter老师公开课的复盘, 里面涉及到知识点与React源码无关, 因此大家可以放轻松阅读。
-   我希望本篇文章可以作为大家开启阅读React源码大门的钥匙。
+   我希望本篇文章可以作为一把开启React源码大门的钥匙。我将会从搭建环境开始, 一步一步带着大家完成一个简易的React框架。代码我将会托管到我的[github](https://github.com/Summer-andy/Toy-React)上,
+   供大家在阅读的过程中作为参考。
 
 ## 搭建环境
   
@@ -706,34 +707,18 @@ categories:
   }
 
   class Board extends Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        squares: Array(9).fill(null),
-      };
-    }
-
-    handleClick(i) {
-      const squares = this.state.squares.slice();
-      squares[i] = 'X';
-      this.setState({ squares: squares });
-    }
-
     renderSquare(i) {
       return (
         <Square
-          value={this.state.squares[i]}
-          onClick={() => this.handleClick(i)}
+          value={this.props.squares[i]}
+          onClick={() => this.props.onClick(i)}
         />
       );
     }
 
     render() {
-      const status = 'Next player: X';
-
       return (
         <div>
-          <div className="status">{status}</div>
           <div className="board-row">
             {this.renderSquare(0)}
             {this.renderSquare(1)}
@@ -755,24 +740,107 @@ categories:
   }
 
   class Game extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        history: [
+          {
+            squares: Array(9).fill(null)
+          }
+        ],
+        stepNumber: 0,
+        xIsNext: true
+      };
+    }
+
+    handleClick(i) {
+      const history = this.state.history.slice(0, this.state.stepNumber + 1);
+      const current = history[history.length - 1];
+      const squares = current.squares.slice();
+      if (calculateWinner(squares) || squares[i]) {
+        return;
+      }
+      squares[i] = this.state.xIsNext ? "X" : "O";
+      this.setState({
+        history: history.concat([
+          {
+            squares: squares
+          }
+        ]),
+        stepNumber: history.length,
+        xIsNext: !this.state.xIsNext
+      });
+    }
+
+    jumpTo(step) {
+      this.setState({
+        stepNumber: step,
+        xIsNext: (step % 2) === 0
+      });
+    }
+
     render() {
+      const history = this.state.history;
+      const current = history[this.state.stepNumber];
+      const winner = calculateWinner(current.squares);
+
+      const moves = history.map((step, move) => {
+        const desc = move ?
+          'Go to move #' + move :
+          'Go to game start';
+        return (
+          <li key={move}>
+            <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          </li>
+        );
+      });
+
+      let status;
+      if (winner) {
+        status = "Winner: " + winner;
+      } else {
+        status = "Next player: " + (this.state.xIsNext ? "X" : "O");
+      }
+
       return (
         <div className="game">
           <div className="game-board">
-            <Board />
+            <Board
+              squares={current.squares}
+              onClick={i => this.handleClick(i)}
+            />
           </div>
           <div className="game-info">
+            <div>{status}</div>
+            <ol>{moves}</ol>
           </div>
         </div>
       );
     }
   }
 
+  ToyReact.render(<Game />, document.getElementById("root"));
 
-  ToyReact.render(
-    <Game />,
-    document.getElementById('root')
-  );
+  function calculateWinner(squares) {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+        return squares[a];
+      }
+    }
+    return null;
+  }
+
   ```
 
   - 修改main.html
@@ -865,7 +933,7 @@ categories:
     ```
 
     我们尝试打包, 查看页面渲染情况, 官网的例子在我们这儿也能够正常运行。
-    ![image](./img/tictoe.gif)
+    ![image](./img/game.gif)
 
   ## 让ToyReact拥有虚拟DOM与Diff算法
 
@@ -915,7 +983,7 @@ categories:
 
   因此在实际渲染的过程中, 会执行节点5的删除和新增操作, 其余节点不会发生任何变化。
 
-  ### 再次重构ToyReact.js
+  ### ToyReact融入虚拟dom功能
 
   在对虚拟DOM和Diff算法有所了解后, 我们又得重构ToyReact.js。这一路, 我们一直在重构ToyReact.js的路上。
 
@@ -923,11 +991,11 @@ categories:
 
   官网的例子:
 
-  ![image](./img/diff2.gif)
+  ![image](./img/game1.gif)
 
   我们每次点击按钮, 它都只更新自个儿的节点。其他节点都不会重新渲染。我们来继续看一下ToyReact的渲染的过程。
 
-   ![image](./img/diff3.gif)
+   ![image](./img/game2.gif)
 
   我们每次点击按钮, 整颗DOM树都重新渲染了, 这对于复杂页面的性能消耗将会非常巨大。因此我们迫切需要引入虚拟DOM+Diff算法来解决这个问题。
 
@@ -1062,3 +1130,116 @@ categories:
   ```
 
   第一部分的for循环其实做的就是 ``` setAttribute ``` 的事情, 将属性赋值到元素上, 第二部分的for循环做的事情则是通过递归的方式插入child.
+
+  那么如何将虚拟DOM与实DOM结合一起呢。其实很简单, 我们通过遍历虚拟的children, 来构造一颗虚拟的树。最终将这棵虚拟的树转化为实际的树。 那么对应到代码上应该如何修改呢？
+  我们还是从 Component中的 ``` RENDER_TO_DOM ```主体函数上着手, 我们仔细研读以下代码, 我们发现这边的children 还是实际的children, 并不是虚拟的children, 因此我们需要在Component类中定义一个vchildren。 
+
+  ```js
+    get vchildren() {
+      return this.children.map(child => child.vdom)
+    }
+  ```
+
+  同理我们遍历的时候就用vchildren进行遍历, 这样我们的这颗树就是虚拟的树。
+
+  ```js
+    for (const child of this.vchildren) {
+        const childRange = document.createRange();
+        childRange.setStart(root, root.childNodes.length);
+        childRange.setEnd(root, root.childNodes.length);
+        child[RENDER_TO_DOM](childRange);
+    }
+  ```
+
+  虚拟dom这块实现的代码可以查看[https://github.com/Summer-andy/Toy-React/tree/feature/vdom](https://github.com/Summer-andy/Toy-React/tree/feature/vdom)。这块确实挺绕的, 我当时也思考了蛮久的, 有兴趣的同学可以查看``` feature/vdom ``` 分支的源码进行阅读。
+
+ ### ToyReact融入Diff算法
+  
+  Diff算法在前面我们已经稍微介绍过了, 我们不会跟React一样去实现他的diff算法, 因为这不是本文的重点。本文的重点旨在让大家理解Diff算法是如何贯穿于虚拟DOM的。但是我们会尽可能的多考虑Diff重绘的情况。那么哪几种情况会导致我们的DOM树重绘制呢?
+
+  - 节点的类型不同
+  ![image](./img/diff-type.png)
+  - 新老节点的props值不同
+  ![image](./img/diff-props.png)
+  - 新节点的props少于老节点的props
+   ![image](./img/diff-props1.png)
+  - 文本节点的内容不同
+   ![image](./img/diff-content.png)
+
+   我们定义一个``` isSameNode ``` 方法来做虚拟DOM的diff
+
+   ```js
+    let isSameNode = (oldNode, newNode) => {
+      if(oldNode.type !== newNode.type) {
+        return false
+      }
+
+      for (const key in newNode.props) {
+        if (oldNode.props[key] !== newNode.props[key]) {
+            return false
+        }
+      }
+
+      if(Object.keys(oldNode.props).length >  Object.keys(newNode.props).length)
+      return false
+
+      if(newNode.type === "#text") {
+        if(newNode.content !== oldNode.content) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+   ```
+
+   好, 那么接下来, 我们需要做的就是遍历我们的虚拟DOM树.首先判断新的虚拟DOM节点与老的虚拟DOM节点
+   是否一样, 如果一样那么就直接替换```range```, 并且通过递归的方式去比对子节点。 如果节点不一样, 那么就更新当前节点下的range, 从而达到部分更新的效果。
+
+   ```js
+
+    let update = (oldNode, newNode) => {
+
+      if(!isSameNode(oldNode, newNode)) {
+          newNode[RENDER_TO_DOM](oldNode._range)
+          return;
+      }
+
+      newNode._range = oldNode._range;
+
+      let newChildren = newNode.vchildren;
+      let oldChildren = oldNode.vchildren;
+
+      for (let index = 0; index < newChildren.length; index++) {
+        const newChild = newChildren[index];
+        const oldChild = oldChildren[index];
+        if(index < oldChildren.length) {
+          update(oldChild, newChild);
+        } else {
+            // ...
+        }
+      }
+    }
+
+   ```
+
+   还差最后一步, 每次更新后, 还需要将虚拟DOM树也更新, 为下次Diff做准备。我们定义一个``` vdom ``` 来接收最新的虚拟DOM树, 执行完更新虚拟的函数后, 我们需要将老的虚拟dom树(this._vdom)换成更新完后
+   的虚拟dom树。至此整个更新流程就完成了, 我们来查看一下最后的效果。
+
+  ```js
+  let vdom = this.vdom;
+  update(this._vdom, vdom);
+  this._vdom = vdom;
+  ```
+
+
+![image](./img/diff4.gif)
+
+ 我们发现DOM树已经不再是重头绘制了。他的更新范围已经缩小在了 ``` Board ``` 类对应的DOM树范围内了。
+ 本篇文章的完整代码可以查看[https://github.com/Summer-andy/Toy-React/tree/feat/ToyReact](https://github.com/Summer-andy/Toy-React/tree/feat/ToyReact)。
+
+
+ ## 结语
+
+   如果认真阅读完本文, 并且动手一行一行敲了代码, 我相信大家会有很多的收获。不知道大家在阅读过程中, 是不是经常会有这样的一个想法: 咦, React的更新流程是咋样的呀？ React的diff算法是怎么样的呀？ 等等。 我觉得正是在
+   这种好奇心的驱使下, 才能够让我们在学习的路上越走越远, 希望大家阅读完本文, 能够对React的了解更上一层楼, 勾起大家对React的好奇心。
