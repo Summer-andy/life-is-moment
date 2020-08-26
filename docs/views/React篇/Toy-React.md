@@ -1237,7 +1237,66 @@ categories:
 
  我们发现DOM树已经不再是重头绘制了。他的更新范围已经缩小在了 ``` Board ``` 类对应的DOM树范围内了。
  本篇文章的完整代码可以查看[https://github.com/Summer-andy/Toy-React/tree/feat/ToyReact](https://github.com/Summer-andy/Toy-React/tree/feat/ToyReact)。
+ 但是这边有一个小问题, 为什么我们不能单个button格子更新呢? 我打算用debug的方式来说明这个问题。 首先, 在 ``` isSameNode ``` 函数上打一个断点, 方便我们调试diff.
 
+ ```js
+  let isSameNode = (oldNode, newNode) => {
+      debugger;
+
+      if(oldNode.type !== newNode.type) {
+        return false
+      }
+
+      for (const key in newNode.props) {
+        if (oldNode.props[key] !== newNode.props[key]) {
+            return false
+        }
+      }
+
+      if(Object.keys(oldNode.props).length >  Object.keys(newNode.props).length)
+      return false
+
+      if(newNode.type === "#text") {
+        if(newNode.content !== oldNode.content) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+ ```
+
+  点击左上方的格子, 打开浏览器调试模式, 程序即可进入debugger模式。我们直接进入到最后一次比较格子的地方。
+
+  ![image](./img/diff-debug1.png)
+
+  老的虚拟DOM的```content``` 是空值, 按照正常逻辑此时的对应的新的虚拟DOM中的content值应该是一个``` x ```.我们来校验一下结果。
+
+  ![image](./img/diff-debug2.png)
+
+  ok, 那么我们接下去需要知道的是, 它是在比较什么地方的时候, 出现了不同, 导致重绘的。我们发现在比对新老节点的props的时候, 发生了值不一样的情况。而不一样的key, 是 ```onClick ```.
+
+  ![image](./img/diff-debug3.png)
+  
+  调试到这里我们应该明白了为什么它重绘的区域与我们想象的不一样了。在比对事件的时候, 我们每次都会实例化一个新的事件函数。这就导致了我们的ToyReact处理不了关于事件调度方面的diff了。那么如果想要达到React那样, 只更新某个节点
+  这样的效果的话, 我们可以采取最残暴的手法, 直接忽略所有的事件。
+
+  ```js
+      for (const key in newNode.props) {
+        if (oldNode.props[key] !== newNode.props[key]) {
+          if(typeof newNode.props[key] !== 'function') {
+            return false
+          }
+        }
+      }
+  ```
+  我们继续看看, 最后的效果如何?
+
+  ![image](./img/finish-diff.gif)
+
+  It is Cool! 我们也做到了只更新某个节点的效果了。 不过大家乐呵乐呵就行, 学技术还是得看React官方源码, 哈哈。
+  
+  ![image](./img/good.jpg)
 
  ## 结语
 
