@@ -42,7 +42,7 @@
 * [替换文本,恐怕没那么简单](./docs/views/随笔记录/searchAndReplace.md)
 * [一些常用小工具](./docs/views/随笔记录/someTools.md)
 * [基于Antd表格的思考](./docs/views/随笔记录/antd-table.md)
-
+* [口琴的简单推导](./docs/views/随笔记录/music.md)
 #### 年度总结篇
 
 * [2019](./docs/guide/review/2019.md)
