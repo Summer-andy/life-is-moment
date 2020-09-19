@@ -417,4 +417,12 @@ categories:
 
   ## 结尾
 
-    本文的算法具体代码可以从我的github上获取, 有兴趣的同学可以运行代码体验一下算法推导过程。
+  运行最终的代码后, 我们发现图的形状和性能都令人比较满意。当然有兴趣的同学可以尝试进一步优化。
+  本文的算法具体代码可以从我的[github](https://github.com/Summer-andy/life-is-moment/blob/master/docs/views/JS%E5%9F%BA%E7%A1%80/tu.html)上获取, 有兴趣的同学可以运行代码体验一下算法推导过程。
+
+
+  ## 参考资料
+
+  - [eloquent javascript](https://eloquentjavascript.net/)
+  - [胡克定律](https://baike.baidu.com/item/%E8%83%A1%E5%85%8B%E5%AE%9A%E5%BE%8B)
+  - [库仑定律](https://baike.baidu.com/item/%E5%BA%93%E4%BB%91%E5%AE%9A%E5%BE%8B/744000?fr=aladdin)
