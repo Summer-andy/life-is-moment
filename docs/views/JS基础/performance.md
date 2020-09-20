@@ -9,7 +9,7 @@ categories:
 
 ## 前言
 
-   为给定的图找到美观的布局是一个总所周知的难题。没有已知的解决方案能可靠地为任意的图找到美观的布局, 特别是对应密集连接的大型图, 做到这一点尤其困难。但是对于某些特定类型的图, 例如, 平面图(可以在没有彼此相交的情况下绘制)存在有效的布局方法。在图的绘制过程中, 我们需要关注两个点： 1. 性能 2. 视觉效果。简言之就是如何快速构建出一张美观的图。本文将会使用力导向图布局的方法完成节点的布局, 最终的呈现效果如下:
+   为给定的图找到美观的布局是一个众所周知的难题。没有已知的解决方案能可靠地为任意的图找到美观的布局, 特别是对应密集连接的大型图, 做到这一点尤其困难。但是对于某些特定类型的图, 例如, 平面图(可以在没有彼此相交的情况下绘制)存在有效的布局方法。在图的绘制过程中, 我们需要关注两个点： 1. 性能 2. 视觉效果。简言之就是如何快速构建出一张美观的图。本文将会使用力导向图布局的方法完成节点的布局, 最终的呈现效果如下:
    ![image](./layout.png)
 
 ## 定义图
@@ -225,17 +225,17 @@ categories:
 
   ![image](./layout3.gif)
 
-  我们发现本来杂乱无章的点, 变得好看了很多了。为了测试算法的准备性, 我们模拟多种的情况的树:
+  我们发现本来杂乱无章的点, 变得好看了很多了。为了测试算法的准确性, 我们模拟多种的情况的树:
 
   -  runLayout(forceDirected_simple, treeGraph(3, 5)) 
 
    ![image](./layout4.png)
 
-  -  runLayout(forceDirected_simple, treeGraph(3, 5)) 
+  -  runLayout(forceDirected_simple, treeGraph(2, 5)) 
 
    ![image](./layout5.png)
 
-  -  runLayout(forceDirected_simple, treeGraph(3, 5)) 
+  -  runLayout(forceDirected_simple, treeGraph(3, 4)) 
 
   ![image](./layout6.png)
 
