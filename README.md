@@ -20,7 +20,7 @@
 * [小朋友你对于Base64是不是有很多问号](./docs/views/JS基础/file-base64.md)
 * [基于Base64的探索与实践](./docs/views/JS基础/file-base64-2.md)
 * [reduce常用功能汇总](./docs/views/JS基础/reduce.md)
-
+* [力导向图的推导与优化](./docs/views/JS基础/performance.md)
 
 
 #### 样式学习篇
@@ -43,6 +43,8 @@
 * [一些常用小工具](./docs/views/随笔记录/someTools.md)
 * [基于Antd表格的思考](./docs/views/随笔记录/antd-table.md)
 * [口琴的简单推导](./docs/views/随笔记录/music.md)
+* [口琴的简单推导](./docs/views/随笔记录/music.md)
+
 #### 年度总结篇
 
 * [2019](./docs/guide/review/2019.md)
