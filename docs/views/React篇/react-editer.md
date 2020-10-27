@@ -7,9 +7,15 @@ categories:
   - React
 ---
 
+
 ## 前言
 
-   文本将会着重教大家如何基于Hooks搭建属于自己的一套绘图工具。示例代码是基于create-react-app构建的, 因此如果大家有兴趣可以在本地初始化一个project, 安装好对应的依赖文件, 就可以上手开发功能了。
+  文本将会着重教大家如何基于Hooks搭建属于自己的一套绘图工具。话不多话直接上图:
+
+  ![](https://imgkr2.cn-bj.ufileos.com/b0e3c8cf-6d55-4463-919f-f7c08c600975.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=fUzBE5p1nPTjfscQlfaQ1xjvZbc%253D&Expires=1603901411)
+
+
+  项目的地址我已经托管到[github](https://github.com/Summer-andy/topology-react)上, 欢迎各位大佬批评指教!后面陆续会将完成的功能, 同步更新到我的github[博客](https://github.com/Summer-andy/life-is-moment)上。
 
 ## 环境搭建
 
@@ -40,7 +46,7 @@ categories:
 
   ### 自定义图片示例
 
-  ![image](./editor/1.png)
+  ![](https://imgkr2.cn-bj.ufileos.com/d071fdc5-2c91-4a95-b501-4ef8027cdca2.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=dwz4jJkBiut4C0F4Rr5zTXd9dEk%253D&Expires=1603901441)
 
   主页面左侧的图形渲染区域, 可以自定义渲染。
 
@@ -98,7 +104,8 @@ categories:
 
   如果觉得使用本地图片麻烦, 我们可以换成在线的图片。
 
-  ![image](./editor/11.png)  
+
+  ![](https://imgkr2.cn-bj.ufileos.com/8d2e8edf-27cb-42fb-90d8-c46ec648864b.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=0%252BjftKIrC%252B1WNhF7w21YVTzqAlo%253D&Expires=1603901568)
 
   首先我们根据图片的url得出base64.
 
@@ -140,7 +147,9 @@ categories:
   ```
 
   ### 支持新建文件, 打开文件, 导出json, 保存png与svg
-  ![image](./editor/2.png)
+  
+  ![](https://imgkr2.cn-bj.ufileos.com/c672f34a-1788-4f22-8437-0828ea355eff.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=X9hsJuAj9CO685JQiY3jIsJ%252BObg%253D&Expires=1603901586)
+
 
   - 新建一个空的画板
 
@@ -242,7 +251,8 @@ categories:
 
   ### 支持节点外观属性(位置大小边距, 边框样式, 字体样式)的设置
 
-  ![image](./editor/3.png)
+  ![](https://imgkr2.cn-bj.ufileos.com/eb623063-ce74-4f94-8d40-7cc9aa7aff2e.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=AHD1XWAJw0%252BSqgWz%252Bx6XPNYBug8%253D&Expires=1603901611)
+
 
   - 节点的位置和大小
 
@@ -407,7 +417,8 @@ categories:
 
   ### 支持节点自定义事件的功能
 
-  ![image](./editor/4.png)
+  
+![](https://imgkr2.cn-bj.ufileos.com/29239865-f01c-464a-923f-4c7e85ce8ab9.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=UHxg06l75GlghbHlVGMkY%252BBB6Xk%253D&Expires=1603901629)
 
   由上图可知, 节点的事件分为事件类型和事件行为两部分。事件类型可以分为: 1.单击事件 2.双击事件 3.websocket事件 4.mqtt事件。事件行为可以分为:
   1.跳转链接 2.执行动画 3.执行函数 4.执行window下的全局函数 5.更新属性数据。
@@ -416,11 +427,13 @@ categories:
 
   - 单击执行自定义函数
 
-  ![image](./editor/5.gif)
+  ![](https://imgkr2.cn-bj.ufileos.com/80217fb5-3fc3-4aa5-b10f-6afecb41c44b.gif?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=eWQVlm7wOqfFztYVbzAMq1VEGtc%253D&Expires=1603901646)
+
 
    查看上图动画, 我们可以发现, 每次点击图形, 都会输出``` 我是自定义函数 ```。那么在我们的编辑器上, 该如何配置呢？
 
-  ![image](./editor/6.png)
+  ![](https://imgkr2.cn-bj.ufileos.com/67fd0e64-8072-49cb-8c5e-4a46a8407c86.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=8hglokmvVu3ZLqlUXSJXxWUMFFk%253D&Expires=1603901660)
+
 
 
   - 接收来自于websocket的值
@@ -435,20 +448,24 @@ categories:
 
   然后我们新增一个拥有点击事件的节点, 模拟信号的发起。
 
-  ![image](./editor/7.png)
+  ![](https://imgkr2.cn-bj.ufileos.com/9957b09c-8ff4-46a7-9ee9-23a539ecaffc.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=7qKXbKTPRrDpZm3iAwpB%252BJczDhg%253D&Expires=1603901671)
+
 
   最后我们定义一个节点用于接收websocket返回的值。
 
-  ![image](./editor/8.png)
+ ![](https://imgkr2.cn-bj.ufileos.com/3271f85e-5a55-4ad8-82c4-a428fee93aeb.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=%252BsXeFHZbx6NcWxHgvsroHLAvWfc%253D&Expires=1603901680)
+
 
   接下来, 我们可以点击预览按钮, 测试我们配置的代码对不对。
 
-  ![image](./editor/9.gif)
+  ![](https://imgkr2.cn-bj.ufileos.com/9eab10b9-e921-40e3-8ef4-5cf064feba0d.gif?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=%252Bk5z4v3STttw0xUU4itHOOud3jU%253D&Expires=1603901689)
+
 
 
   ### 支持线条的样式修改
 
-  ![image](./editor/10.png)
+  ![](https://imgkr2.cn-bj.ufileos.com/a0c6ef59-717d-4b9e-97a3-4aa1d04bb6af.png?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=eOTuRdb9JhXh9gJdOXLgmDtGgmk%253D&Expires=1603901698)
+
 
   目前只支持上图几种属性的设置。线条的更新与节点的更新类似, 我们直接修改线条的属性, 然后通过``` updateProps ``` 更新对应线条的样式。
 
@@ -549,3 +566,11 @@ categories:
       canvas.translate(x, y);
     };
   ```
+
+## 结尾
+
+   虽然[Topology](https://www.yuque.com/alsmile/topology/about)的官网有各个API的详细说明, 但是从API转化到实际业务中, 还是需要耗费蛮多时间。其次官方的React版本写的比较复杂对于新手上手的成本比较高, 因此就萌生了想要写一版简单的```topology-react``` 帮助大家快速上手。
+
+   最后的最后, 感谢[Alsmile](https://github.com/Alsmile)开源的绘图引擎。如果对你有帮助, 别忘了给一个小小的[star](https://github.com/Summer-andy/topology-react)哦, 谢谢啦~
+   
+  ![](https://imgkr2.cn-bj.ufileos.com/888422c9-6650-4783-965e-e44662938a7e.jpg?UCloudPublicKey=TOKEN_8d8b72be-579a-4e83-bfd0-5f6ce1546f13&Signature=RkEupJdxNdmF8P1peiti1ITB%252FaM%253D&Expires=1603901954)
