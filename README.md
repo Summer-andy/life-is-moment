@@ -33,6 +33,7 @@
 * [深度理解Hook规则](./docs/views/React篇/hooksRule.md)
 * [常用的自定Hooks](./docs/views/React篇/extraHooks.md)
 * [从0实现React框架](./docs/views/React篇/Toy-React.md)
+* [基于React+Topology构建在线绘图工具](./docs/views/React篇/react-editer.md)
 
 #### 随笔记录
 
@@ -43,7 +44,8 @@
 * [一些常用小工具](./docs/views/随笔记录/someTools.md)
 * [基于Antd表格的思考](./docs/views/随笔记录/antd-table.md)
 * [口琴的简单推导](./docs/views/随笔记录/music.md)
-* [口琴的简单推导](./docs/views/随笔记录/music.md)
+* [深入理解styled-components运行机制](./docs/views/随笔记录/styled-components.md)
+* [前端赋能-APP的全链路开发](./docs/views/随笔记录/app-build.md)
 
 #### 年度总结篇
 
