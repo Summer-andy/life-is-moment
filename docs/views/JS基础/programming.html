@@ -17,12 +17,16 @@ function parseExpression(program) {
   if(match = /^"([^"]*)"/.exec(program)) { // 匹配字符串例如“bbb”
     expr = {type: "value", value: match[1]};
   } 
+
   else if(match = /^\d+\b/.exec(program)) {
     expr = {type: "value", value: Number(match[0])};
   }
+
   else if(match = /^[^\s(),#"]+/.exec(program)) {
     expr = {type: "word", name: match[0]}
-  } else {
+  }
+  
+  else {
     throw new SyntaxError('错误的语法: '+ program)
   }
   
@@ -37,7 +41,6 @@ function skipSpace(string) {
 
 function parseApply(expr, program) {
   program = skipSpace(program);
-  
   if(program[0] !== '(') {
     return { expr, rest: program }
   }
@@ -75,9 +78,8 @@ function evaluate(expr, scope) {
     return expr.value;
   } else if (expr.type === 'word') {
     if(expr.name in scope) {
-      return scope[expr.name]
+      return scope[expr.name];
     } else {
-      debugger;
       throw new ReferenceError(`Undefined binding: ${expr.name}`);
     }
   } else if(expr.type === 'apply') {
@@ -137,9 +139,7 @@ const topScope = Object.create(null);
 topScope.true = true;
 topScope.false = false;
 
-let prog = parse(`if(true, false, true)`);
-
-for (let op of ["+"]) {
+for (let op of ["+", "-"]) {
   topScope[op] = Function("a, b", `return a ${op} b`) ;
 }
 
@@ -149,6 +149,7 @@ topScope.print = value => {
 }
 
 function run(program) {
+  console.log(evaluate(parse(program), Object.create(topScope)));
   return evaluate(parse(program), Object.create(topScope));
 }
 
@@ -156,9 +157,7 @@ run(
   `
   do(
     define(total, 2),
-    define(total2, 1),
-    define(total3, +(total, total2)),
-    print(total3)
+    print(total)
   )
   `
 )
