@@ -12,6 +12,10 @@
 
 ### Life is moment. The more you know, the more you don't know.
 
+
+ ![image](./前端知识图谱.png)
+
+
 #### 基础语法篇
 * [你不知道的Error](./docs/views/JS基础/Error.md)
 * [你不知道的js之你不知道的this](./docs/views/JS基础/This.md)
@@ -51,8 +55,11 @@
 * [前端赋能-APP的全链路开发](./docs/views/随笔记录/app-build.md)
 * [记一次给create-react-app提的PR](./docs/views/随笔记录/css-build.md)
 
+#### 设计模式
+
+* [策略模式](./docs/views/设计模式/策略模式.md)
+* [鸭子模型](./docs/views/设计模式/duck.md)
 
 #### 年度总结篇
-
-* [2019](./docs/guide/review/2019.md)
 * [24岁, 接触前端的这三年](./docs/guide/review/2020.md)
+
