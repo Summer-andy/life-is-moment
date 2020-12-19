@@ -24,7 +24,6 @@
 * [分享《构建自动接收派发机器人》](./docs/views/JS基础/邮件机器人.md)
 
 
-
 #### 样式学习篇
 * [css常用选择](./docs/views/css样式/选择器.md)
 
@@ -36,6 +35,8 @@
 * [常用的自定Hooks](./docs/views/React篇/extraHooks.md)
 * [从0实现React框架](./docs/views/React篇/Toy-React.md)
 * [基于React+Topology构建在线绘图工具](./docs/views/React篇/react-editer.md)
+* [F7 移动端组件最佳实践指南](./docs/views/React篇/framework7.md)
+
 
 #### 随笔记录
 
@@ -48,9 +49,10 @@
 * [口琴的简单推导](./docs/views/随笔记录/music.md)
 * [深入理解styled-components运行机制](./docs/views/随笔记录/styled-components.md)
 * [前端赋能-APP的全链路开发](./docs/views/随笔记录/app-build.md)
-* [前端赋能-记一次给create-react-app提的PR](./docs/views/随笔记录/css-build.md)
+* [记一次给create-react-app提的PR](./docs/views/随笔记录/css-build.md)
 
 
 #### 年度总结篇
 
 * [2019](./docs/guide/review/2019.md)
+* [24岁, 接触前端的这三年](./docs/guide/review/2020.md)
