@@ -10,7 +10,8 @@ categories:
    前言: 之前虽然大致看了看Babel相关的知识,但是并没有深入了解。本文前半部分先详细介绍一下Babel是如何编译JS代码并且转化为浏览器能够理解的代码, 后半部分将会实现一个简单的babel插件。
 :::
 #### 什么是Babel？
-    Babel is a compiler for writing next generation JavaScript.Babel是编写下一代JavaScript的编译器。
+    Babel is a compiler for writing next generation JavaScript. 
+    Babel是编写下一代JavaScript的编译器。
 
 #### Babel的作用？
     帮我们编写的es6,es7...解析成浏览器能够理解的代码
@@ -96,7 +97,7 @@ categories:
      ```
 
  ##### 最后一步: ```AST语法树转化为JS代码```
-   - 这里我们使用babel-generator将AST转化为JS, generate的第一个参数就是转化后的ast了, 第二个参数是一些生成js代码时候的一些选项比如要不注释,压缩等等。至此上半节的内容已经结束了。下半节我们将会开始编写插件。
+   - 这里我们使用babel-generator将AST转化为JS, generate的第一个参数就是转化后的ast了, 第二个参数是一些生成js代码时候的一些选项比如要不要注释,压缩等等。至此上半节的内容已经结束了。下半节我们将会开始编写插件。
   
    ```
     const oj = generate.default(ast,{ },code)
