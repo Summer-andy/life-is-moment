@@ -10,69 +10,7 @@ categories:
 ## 前言
 
    useState是我们在编写Hook代码时经常用到的一个钩子。本文将会带着大家深入源码, 探寻useState这个钩子做了哪些事情。
-
-## 前置知识
-
-    - performUnitOfWork:  从root节点开始更新, 然后遍历下一个节点, 直接遍历要要更新的节点为止。此时开始调用 ``` beginWork ```
-
-    ```js
-    var current$$1 = workInProgress.alternate // 当前的fiber节点
-    ```
-
-    在调用render或者setState后会克隆出一个镜像fiber, diff产出的变化会标记在镜像fiber上。而alternate就是链接当前
-    fiber tree和镜像fiber tree , 用于断点恢复。
-
-    work-in-progress
-    A fiber that has not yet completed; conceptually, a stack frame which has not yet returned.The alternate of the current fiber is the work-in-progress, and the alternate of the work-in-progress is the current fiber
-
-    1. current$$1.memoizedState: element
-    2. null 
-    3. match: { path: '/', url: '/', params: {} }
-    4. null
-    5. null
-    6. null
-    7. null
-    8. match: null
-    9. match: null
-    10. match: null
-    11. match: null
-    12. match: null
-    13. match: { path: '/hooks', url: '/hooks', params: {} }
-    14. baseState: 134
-        baseUpdate: {expirationTime: 1073741823, action: 134, next:  { action: 135 expirationTime: 1073741823 next: null}}
-        memoizedState: 134
-        next: null
-        queue: {
-          dispatch: action
-          last: {
-          action: 135
-          expirationTime: 1073741823
-          next: null
-          }
-        }
-
-  - beginWork
-
-  - updateFunctionComponent的current$$1
-
-  - updateFunctionComponent 
-
-  - prepareToUseHooks之前的current.memoizedState 
-     
-  - prepareToUseHooks 准备使用Hook, 这时候已经生成了quene   
-
-  -   
   
-  ```js
-  var _action2 = _update.action;
-  _newState = reducer(_newState, _action2);
-
-  function basicStateReducer(state, action) {
-      return typeof action === 'function' ? action(state) : action;
-  }
-  ```
-
-   
 ## 渲染Hook前的准备
 
    当执行 ``` updateFunctionComponent ``` 的时候首先会调用 ``` prepareToUseHooks ``` 函数, 它的内容非常简单, 第一步设置本次更新的优先级,
@@ -247,39 +185,39 @@ categories:
 
   -  queue
 
-    ```js
-    queue = {
-      dispatch: func,
-      last: {
-        action: 124
+      ```js
+      queue = {
+        dispatch: func,
+        last: {
+          action: 124
+        }
       }
-    }
-    ```
+      ```
 
-    此时我们的queue不再为null. 因此进入 queue !== null 的循环中。接下来就将queue最新的值赋值给当前 ``` workInProgressHook ``` 的 memoizedState, 完成
-    新的一轮state的更新。
+      此时我们的queue不再为null. 因此进入 queue !== null 的循环中。接下来就将queue最新的值赋值给当前 ``` workInProgressHook ``` 的 memoizedState, 完成
+      新的一轮state的更新。
 
-    ```js
+      ```js
 
-    if(queue !== null) {
-      // ...
-      var _last = queue.last; // The last update that is part of the base state.
-      var _baseUpdate = workInProgressHook.baseUpdate;
-      var first = void 0;
+      if(queue !== null) {
+        // ...
+        var _last = queue.last; // The last update that is part of the base state.
+        var _baseUpdate = workInProgressHook.baseUpdate;
+        var first = void 0;
 
-      first = _last !== null ? _last.next : null
+        first = _last !== null ? _last.next : null
 
-      var _update = first;
+        var _update = first;
 
-       var _action2 = _update.action;
+        var _action2 = _update.action;
 
-      _newState = reducer(_newState, _action2);
+        _newState = reducer(_newState, _action2);
 
-      workInProgressHook.memoizedState = _newState;
-      workInProgressHook.baseUpdate = newBaseUpdate;
-      workInProgressHook.baseState = newBaseState;
-    }
-    ```
+        workInProgressHook.memoizedState = _newState;
+        workInProgressHook.baseUpdate = newBaseUpdate;
+        workInProgressHook.baseState = newBaseState;
+      }
+      ```
 
 
 
