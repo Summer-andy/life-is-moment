@@ -26,7 +26,7 @@
 * [reduce常用功能汇总](./docs/views/JS基础/reduce.md)
 * [力导向图的推导与优化](./docs/views/JS基础/performance.md)
 * [分享《构建自动接收派发机器人》](./docs/views/JS基础/邮件机器人.md)
-
+* [探寻public class fields语法](./docs/views/JS基础/classFields.md)
 
 #### 样式学习篇
 * [css常用选择](./docs/views/css样式/选择器.md)
@@ -63,7 +63,6 @@
 * [深入理解styled-components运行机制](./docs/views/随笔记录/styled-components.md)
 * [前端赋能-APP的全链路开发](./docs/views/随笔记录/app-build.md)
 * [记一次给create-react-app提的PR](./docs/views/随笔记录/css-build.md)
-
 #### 设计模式
 
 * [策略模式](./docs/views/设计模式/策略模式.md)
