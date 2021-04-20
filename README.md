@@ -26,7 +26,7 @@
 * [reduce常用功能汇总](./docs/views/JS基础/reduce.md)
 * [力导向图的推导与优化](./docs/views/JS基础/performance.md)
 * [分享《构建自动接收派发机器人》](./docs/views/JS基础/邮件机器人.md)
-* [探寻public class fields语法](./docs/views/JS基础/classFields.md)
+* [探寻public class fields](./docs/views/JS基础/classFields.md)
 
 #### 样式学习篇
 * [css常用选择](./docs/views/css样式/选择器.md)
