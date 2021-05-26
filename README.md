@@ -65,6 +65,8 @@
 * [深入理解styled-components运行机制](./docs/views/随笔记录/styled-components.md)
 * [前端赋能-APP的全链路开发](./docs/views/随笔记录/app-build.md)
 * [记一次给create-react-app提的PR](./docs/views/随笔记录/css-build.md)
+* [vite插件化的探索](./docs/views/随笔记录/vite插件化的探索.md)
+
 #### 设计模式
 
 * [策略模式](./docs/views/设计模式/策略模式.md)
