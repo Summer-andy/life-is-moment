@@ -66,6 +66,8 @@
 * [前端赋能-APP的全链路开发](./docs/views/随笔记录/app-build.md)
 * [记一次给create-react-app提的PR](./docs/views/随笔记录/css-build.md)
 * [vite插件化的探索](./docs/views/随笔记录/vite插件化的探索.md)
+* [node包学习之chokidar](./docs/views/随笔记录/chokidar.md)
+
 
 #### 设计模式
 
