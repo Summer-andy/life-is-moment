@@ -52,4 +52,21 @@ categories:
 
    ``` mappings ``` 的内容是指 转化前和转化后的映射集合关系的集合, ```分号(;)```代表一行,  每行的 mapping用``` 逗号(,) ```分开。
 
+   下面我们重点来看一下 ``` mappings ``` 的内容, 
+
+   ```js
+    "mappings":"AAAA,SAASA,QAAQC,MACf,MAAO,aAAeA,KCDxB,SAASC,OAAOC,KACd,MAAO,YAAcA"
+   ```
+
+   咋眼一看, 很看出上述字母分别代表啥意思, 所以更别提搞清楚映射关系了。我们来看下例子,
+
+   假如我们现在有 ``` test.js ``` 文件, 内容为 summer, 经过压缩处理后输出的文件是 ``` test1.js ```, 其内容为 ``` mmersu ``` (ps: 为了方便理解匹配关系, 假定压缩后的内容)
+   
+   ![image](./imgs/sourcemap/1.png)
+
+   我们以s字符为例: 它在输入中的坐标为(0, 1), 在输出中坐标为(0, 5), 因此映射关系为:
+
+   ![image](./imgs/sourcemap/2.png)
+
+
    
