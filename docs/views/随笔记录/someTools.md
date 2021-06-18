@@ -225,3 +225,35 @@ categories:
       createdOn: '2014-09-23T19:25:25Z',
     });
   ```
+
+  ::: tip
+- [新手引导组件](https://github.com/elrumordelaluz/reactour)
+  :::
+
+  ```js
+  import React, { useState } from 'react'
+  import Tour from 'reactour'
+
+  const steps = [
+    {
+      selector: '.first-step',
+      content: 'This is my first Step',
+    },
+    // ...
+  ];
+
+  const App = () => {
+    const [isTourOpen, setIsTourOpen] = useState(false);
+
+    return (
+      <>
+        { /* other stuff */}
+        <Tour
+          steps={steps}
+          isOpen={isTourOpen}
+          onRequestClose={() => setIsTourOpen(false)}
+        />
+      </>
+    )
+  };
+  ```
